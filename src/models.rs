@@ -1,6 +1,8 @@
-//! # 数据模型模块
-//! 
-//! 定义项目中使用的核心数据结构和枚举类型。
+//数据模型模块
+
+//定义项目中使用的核心数据结构和枚举类型。
+
+use serde::Serialize;
 
 /// 支持的编程语言枚举
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
@@ -19,7 +21,7 @@ impl Language {
             "python" => Some(Language::Python),
             "java" => Some(Language::Java),
             "c" => Some(Language::C),
-            "cpp" | "c++" => Some(Language::Cpp),  // 支持两种写法
+            "cpp" | "c++" => Some(Language::Cpp), // 支持两种写法
             "rust" => Some(Language::Rust),
             _ => None,
         }
@@ -74,8 +76,8 @@ impl Language {
 #[derive(Debug, Clone)]
 #[allow(dead_code)]
 pub struct CodeRequest {
-    pub language: String,   // 语言类型
-    pub code: String,       // 代码内容
+    pub language: String,     // 语言类型
+    pub code: String,         // 代码内容
     pub timeout: Option<u32>, // 超时时间（可选）
 }
 
@@ -103,12 +105,12 @@ impl CodeRequest {
 }
 
 /// 代码执行响应结构体
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct CodeResponse {
-    pub success: bool,           // 是否执行成功
-    pub output: String,          // 标准输出
-    pub errors: String,          // 错误信息
-    pub exit_code: Option<i32>,  // 退出码
+    pub success: bool,               // 是否执行成功
+    pub output: String,              // 标准输出
+    pub errors: String,              // 错误信息
+    pub exit_code: Option<i32>,      // 退出码
     pub execution_time: Option<u64>, // 执行时间（毫秒）
 }
 
@@ -143,22 +145,7 @@ impl CodeResponse {
 
     /// 转换为 JSON 字符串
     pub fn to_json(&self) -> String {
-        let exit_code_str = match self.exit_code {
-            Some(code) => code.to_string(),
-            None => "null".to_string(),
-        };
-        let exec_time_str = match self.execution_time {
-            Some(time) => time.to_string(),
-            None => "null".to_string(),
-        };
-        format!(
-            "{{\"success\":{},\"output\":\"{}\",\"errors\":\"{}\",\"exit_code\":{},\"execution_time\":{}}}",
-            self.success,
-            escape_json(&self.output),
-            escape_json(&self.errors),
-            exit_code_str,
-            exec_time_str
-        )
+        serde_json::to_string(self).unwrap_or_else(|_| "{\"success\":false,\"output\":\"\",\"errors\":\"JSON serialization failed\",\"exit_code\":null,\"execution_time\":null}".to_string())
     }
 }
 
@@ -242,17 +229,18 @@ impl ExecutionStats {
 }
 
 /// 代码分析问题结构体
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct AnalysisIssue {
-    pub severity: String,    // 严重程度：error, warning, info
-    pub message: String,     // 问题描述
-    pub line: usize,         // 所在行
+    pub severity: String,      // 严重程度：error, warning, info
+    pub message: String,       // 问题描述
+    pub line: usize,           // 所在行
     pub column: Option<usize>, // 所在列（可选）
-    pub rule: String,        // 规则名称
+    pub rule: String,          // 规则名称
 }
 
 impl AnalysisIssue {
     /// 创建新的分析问题
+    #[allow(dead_code)]
     pub fn new(severity: &str, message: &str, line: usize, rule: &str) -> Self {
         AnalysisIssue {
             severity: severity.to_string(),
@@ -262,26 +250,10 @@ impl AnalysisIssue {
             rule: rule.to_string(),
         }
     }
-
-    /// 转换为 JSON 字符串
-    pub fn to_json(&self) -> String {
-        let col_str = match self.column {
-            Some(c) => c.to_string(),
-            None => "null".to_string(),
-        };
-        format!(
-            "{{\"severity\":\"{}\",\"message\":\"{}\",\"line\":{},\"column\":{},\"rule\":\"{}\"}}",
-            escape_json(&self.severity),
-            escape_json(&self.message),
-            self.line,
-            col_str,
-            escape_json(&self.rule)
-        )
-    }
 }
 
 /// 代码分析响应结构体
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct AnalysisResponse {
     pub success: bool,              // 是否分析成功
     pub issues: Vec<AnalysisIssue>, // 发现的问题列表
@@ -291,6 +263,7 @@ pub struct AnalysisResponse {
 
 impl AnalysisResponse {
     /// 创建成功的分析响应
+    #[allow(dead_code)]
     pub fn success(issues: Vec<AnalysisIssue>, exec_time: u64, version: &str) -> Self {
         AnalysisResponse {
             success: true,
@@ -302,23 +275,6 @@ impl AnalysisResponse {
 
     /// 转换为 JSON 字符串
     pub fn to_json(&self) -> String {
-        let issues_json: Vec<String> = self.issues.iter().map(|i| i.to_json()).collect();
-        let issues_str = issues_json.join(",");
-        format!(
-            "{{\"success\":{},\"issues\":[{}],\"execution_time_ms\":{},\"analyzer_version\":\"{}\"}}",
-            self.success,
-            issues_str,
-            self.execution_time_ms,
-            self.analyzer_version
-        )
+        serde_json::to_string(self).unwrap_or_else(|_| "{\"success\":false,\"issues\":[],\"execution_time_ms\":0,\"analyzer_version\":\"\"}".to_string())
     }
-}
-
-/// JSON 转义辅助函数
-fn escape_json(s: &str) -> String {
-    s.replace("\\", "\\\\")
-        .replace("\"", "\\\"")
-        .replace("\n", "\\n")
-        .replace("\r", "\\r")
-        .replace("\t", "\\t")
 }

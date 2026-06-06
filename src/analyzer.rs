@@ -1,7 +1,6 @@
-//! # 代码分析模块
-//! 
-//! 提供多语言代码静态分析功能，支持 Python、Java、C、C++、Rust 五种语言的代码检查。
-//! 使用各语言的原生分析工具（如 pylint、javac、gcc、clippy 等）进行静态分析。
+//代码分析模块
+//提供多语言代码静态分析功能，支持 Python、Java、C、C++、Rust 五种语言的代码检查。
+//使用各语言的原生分析工具（如 pylint、javac、gcc、clippy 等）进行静态分析。
 
 use super::models::{AnalysisIssue, AnalysisResponse, Language};
 use std::process::{Command, Stdio};
@@ -17,16 +16,16 @@ impl CodeAnalyzer {
     }
 
     /// 分析指定语言的代码
-    /// 
+    ///
     /// # 参数
     /// - `language`: 编程语言类型
     /// - `code`: 待分析的代码内容
-    /// 
+    ///
     /// # 返回值
     /// 分析响应，包含发现的问题列表和执行时间
     pub fn analyze(&self, language: &Language, code: &str) -> AnalysisResponse {
         let start_time = Instant::now();
-        
+
         let issues = match language {
             Language::Python => self.analyze_python(code),
             Language::Java => self.analyze_java(code),
@@ -54,7 +53,7 @@ impl CodeAnalyzer {
         };
 
         let source_path = temp_dir.path().join("analysis_target.py");
-        if let Err(_) = std::fs::write(&source_path, code) {
+        if std::fs::write(&source_path, code).is_err() {
             return issues;
         }
 
@@ -68,10 +67,10 @@ impl CodeAnalyzer {
             .output();
 
         if let Ok(output) = output {
-            let stdout = String::from_utf8_lossy(&output.stdout);
-            let stderr = String::from_utf8_lossy(&output.stderr);
+            let stdout = String::from_utf8_lossy(&output.stdout).to_string();
+            let stderr = String::from_utf8_lossy(&output.stderr).to_string();
             issues.extend(self.parse_pylint_output(&stdout));
-            if stderr.len() > 0 && issues.is_empty() {
+            if !stderr.is_empty() && issues.is_empty() {
                 issues.extend(self.parse_pylint_output(&stderr));
             }
         }
@@ -88,7 +87,7 @@ impl CodeAnalyzer {
 
             if let Ok(output) = output {
                 if !output.status.success() {
-                    let stderr = String::from_utf8_lossy(&output.stderr);
+                    let stderr = String::from_utf8_lossy(&output.stderr).to_string();
                     issues.push(AnalysisIssue {
                         severity: "error".to_string(),
                         message: stderr.trim().to_string(),
@@ -105,25 +104,26 @@ impl CodeAnalyzer {
 
     fn parse_pylint_output(&self, output: &str) -> Vec<AnalysisIssue> {
         let mut issues = Vec::new();
-        
+
         for line in output.lines() {
             if line.contains(":") && !line.starts_with("****") {
                 let parts: Vec<&str> = line.split(':').collect();
                 if parts.len() >= 4 {
-                    let filename = parts.get(0).unwrap_or(&"");
+                    let _filename = parts.first().unwrap_or(&"");
                     let line_num = parts.get(1).unwrap_or(&"0").parse::<usize>().unwrap_or(0);
                     let column_str = parts.get(2).unwrap_or(&"0");
                     let column = column_str.parse::<usize>().unwrap_or(0);
                     let rest = parts[3..].join(":");
-                    
-                    let severity = if rest.contains("(error)") || rest.contains("(F)")
-                        || rest.contains("(E)") {
-                        "error"
-                    } else if rest.contains("(warning)") || rest.contains("(W)") {
-                        "warning"
-                    } else {
-                        "info"
-                    };
+
+                    let severity =
+                        if rest.contains("(error)") || rest.contains("(F)") || rest.contains("(E)")
+                        {
+                            "error"
+                        } else if rest.contains("(warning)") || rest.contains("(W)") {
+                            "warning"
+                        } else {
+                            "info"
+                        };
 
                     let rule = if rest.contains("(C)") {
                         "convention"
@@ -149,7 +149,7 @@ impl CodeAnalyzer {
                 }
             }
         }
-        
+
         issues
     }
 
@@ -162,7 +162,7 @@ impl CodeAnalyzer {
         };
 
         let source_path = temp_dir.path().join("Main.java");
-        if let Err(_) = std::fs::write(&source_path, code) {
+        if std::fs::write(&source_path, code).is_err() {
             return issues;
         }
 
@@ -185,12 +185,12 @@ impl CodeAnalyzer {
 
     fn parse_javac_output(&self, output: &str) -> Vec<AnalysisIssue> {
         let mut issues = Vec::new();
-        
+
         for line in output.lines() {
             if line.contains("warning:") || line.contains("error:") {
                 let line_num = self.extract_line_number(line, 1);
                 let message = line.to_string();
-                
+
                 let severity = if line.contains("error:") {
                     "error"
                 } else {
@@ -218,7 +218,7 @@ impl CodeAnalyzer {
                 });
             }
         }
-        
+
         issues
     }
 
@@ -240,13 +240,18 @@ impl CodeAnalyzer {
 
         let source_name = format!("main{}", extension);
         let source_path = temp_dir.path().join(&source_name);
-        if let Err(_) = std::fs::write(&source_path, code) {
+        if std::fs::write(&source_path, code).is_err() {
             return issues;
         }
 
         // 使用编译器的 -fsyntax-only 和 -Wall -Wextra 选项进行分析
+        let std_flag = if compiler == "gcc" {
+            "-std=c11"
+        } else {
+            "-std=c++17"
+        };
         let output = Command::new(compiler)
-            .args(&["-fsyntax-only", "-Wall", "-Wextra", "-pedantic", "-std=c11"])
+            .args(["-fsyntax-only", "-Wall", "-Wextra", "-pedantic", std_flag])
             .arg(&source_path)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
@@ -267,8 +272,8 @@ impl CodeAnalyzer {
             .output();
 
         if let Ok(cppcheck_output) = cppcheck_output {
-            let stdout = String::from_utf8_lossy(&cppcheck_output.stdout);
-            let stderr = String::from_utf8_lossy(&cppcheck_output.stderr);
+            let stdout = String::from_utf8_lossy(&cppcheck_output.stdout).to_string();
+            let stderr = String::from_utf8_lossy(&cppcheck_output.stderr).to_string();
             issues.extend(self.parse_cppcheck_output(&stdout));
             issues.extend(self.parse_cppcheck_output(&stderr));
         }
@@ -276,13 +281,13 @@ impl CodeAnalyzer {
         issues
     }
 
-    fn parse_gcc_output(&self, output: &str, compiler: &str) -> Vec<AnalysisIssue> {
+    fn parse_gcc_output(&self, output: &str, _compiler: &str) -> Vec<AnalysisIssue> {
         let mut issues = Vec::new();
-        
+
         for line in output.lines() {
             if line.contains("warning:") || line.contains("error:") {
                 let line_num = self.extract_line_number(line, 1);
-                
+
                 let severity = if line.contains("error:") {
                     "error"
                 } else {
@@ -308,20 +313,20 @@ impl CodeAnalyzer {
                 });
             }
         }
-        
+
         issues
     }
 
     fn parse_cppcheck_output(&self, output: &str) -> Vec<AnalysisIssue> {
         let mut issues = Vec::new();
-        
+
         for line in output.lines() {
             if line.contains("[") && line.contains("]") {
                 let line_num = self.extract_line_number(line, 1);
-                
+
                 // cppcheck 格式：file:line:message: [rulename]
                 let message_parts: Vec<&str> = line.split('[').collect();
-                let message = message_parts.get(0).unwrap_or(&"").trim().to_string();
+                let message = message_parts.first().unwrap_or(&"").trim().to_string();
                 let rule = if message_parts.len() > 1 {
                     message_parts[1].replace("]", "").to_string()
                 } else {
@@ -345,7 +350,7 @@ impl CodeAnalyzer {
                 });
             }
         }
-        
+
         issues
     }
 
@@ -358,13 +363,13 @@ impl CodeAnalyzer {
         };
 
         let source_path = temp_dir.path().join("main.rs");
-        if let Err(_) = std::fs::write(&source_path, code) {
+        if std::fs::write(&source_path, code).is_err() {
             return issues;
         }
 
-        // 使用 rustc --emit=metadata 进行语法和类型检查
+        // 使用 rustc --emit=metadata 进行语法和类型检查（使用稳定版选项）
         let output = Command::new("rustc")
-            .args(&["--emit=metadata", "-Z", "unpretty=every-file_loops_normalized"])
+            .args(["--emit=metadata", "--edition=2021"])
             .arg(&source_path)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
@@ -377,15 +382,15 @@ impl CodeAnalyzer {
 
         // 尝试使用 clippy 进行更详细的分析
         let clippy_output = Command::new("cargo")
-            .args(&["clippy", "--message-format=json"])
+            .args(["clippy", "--message-format=json"])
             .current_dir(temp_dir.path())
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .output();
 
         if let Ok(clippy_output) = clippy_output {
-            let stdout = String::from_utf8_lossy(&clippy_output.stdout);
-            let stderr = String::from_utf8_lossy(&clippy_output.stderr);
+            let stdout = String::from_utf8_lossy(&clippy_output.stdout).to_string();
+            let stderr = String::from_utf8_lossy(&clippy_output.stderr).to_string();
             issues.extend(self.parse_clippy_output(&stdout));
             issues.extend(self.parse_clippy_output(&stderr));
         }
@@ -395,11 +400,11 @@ impl CodeAnalyzer {
 
     fn parse_rustc_output(&self, output: &str) -> Vec<AnalysisIssue> {
         let mut issues = Vec::new();
-        
+
         for line in output.lines() {
             if line.contains("error") || line.contains("warning") {
                 let line_num = self.extract_line_number(line, 1);
-                
+
                 let severity = if line.contains("error") {
                     "error"
                 } else {
@@ -425,13 +430,13 @@ impl CodeAnalyzer {
                 });
             }
         }
-        
+
         issues
     }
 
     fn parse_clippy_output(&self, output: &str) -> Vec<AnalysisIssue> {
         let mut issues = Vec::new();
-        
+
         // 对 clippy 输出进行简单的文本解析
         for line in output.lines() {
             // 尝试从以下格式提取行号：
@@ -444,7 +449,11 @@ impl CodeAnalyzer {
                 if let Ok(line_num) = parts.get(1).unwrap_or(&"0").parse::<usize>() {
                     let message = parts.get(2..).unwrap_or(&[]).join(":");
                     if message.contains("warning") || message.contains("error") {
-                        let severity = if message.contains("error") { "error" } else { "warning" };
+                        let severity = if message.contains("error") {
+                            "error"
+                        } else {
+                            "warning"
+                        };
                         issues.push(AnalysisIssue {
                             severity: severity.to_string(),
                             message: message.trim().to_string(),
@@ -456,7 +465,7 @@ impl CodeAnalyzer {
                 }
             }
         }
-        
+
         issues
     }
 
@@ -484,11 +493,11 @@ impl CodeAnalyzer {
 }
 
 /// 代码分析的统一入口函数
-/// 
+///
 /// # 参数
 /// - `language`: 编程语言类型
 /// - `code`: 待分析的代码内容
-/// 
+///
 /// # 返回值
 /// 分析响应，包含发现的问题列表和执行时间
 pub fn analyze_code(language: &Language, code: &str) -> AnalysisResponse {

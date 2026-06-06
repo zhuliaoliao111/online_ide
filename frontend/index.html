@@ -1028,7 +1028,7 @@ int main() {
             return text;
         }
         
-        function applyCodeChange(encodedCode) {
+        window.applyCodeChange = function(encodedCode) {
             const code = decodeURIComponent(encodedCode);
             editor.getModel().setValue(code);
             showToast('代码已更新！');

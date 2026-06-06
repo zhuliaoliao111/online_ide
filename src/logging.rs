@@ -1,5 +1,5 @@
 //! # 日志系统模块
-//! 
+//!
 //! 提供线程安全的日志记录功能，支持多个日志级别（Trace/Debug/Info/Warn/Error），
 //! 同时输出到控制台和日志文件。
 
@@ -9,13 +9,13 @@ use std::path::Path;
 use std::sync::{Arc, Mutex};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use time::OffsetDateTime;
 use time::macros::format_description;
+use time::OffsetDateTime;
 
 use super::config::{LogLevel, LoggingConfig};
 
 /// 日志记录器结构体
-/// 
+///
 /// 支持多级别日志输出，线程安全，可同时输出到控制台和文件。
 #[allow(dead_code)]
 pub struct Logger {
@@ -29,10 +29,10 @@ pub struct Logger {
 #[allow(dead_code)]
 impl Logger {
     /// 创建日志记录器实例
-    /// 
+    ///
     /// # 参数
     /// - `config`: 日志配置
-    /// 
+    ///
     /// # 返回值
     /// 成功返回 Logger 实例，失败返回 IO 错误
     pub fn new(config: &LoggingConfig) -> Result<Self, std::io::Error> {
@@ -150,7 +150,6 @@ impl Logger {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::sync::Arc;
 
     #[test]
     fn test_log_level_order() {

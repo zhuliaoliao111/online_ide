@@ -1,6 +1,5 @@
-//! # HTTP 服务器模块
-//! 
-//! 提供基于 TCP 的简易 HTTP 服务器实现，支持代码编译、静态分析等 API 端点。
+//HTTP 服务器模块
+//提供基于 TCP 的简易 HTTP 服务器实现，支持代码编译、静态分析等 API 端点。
 
 use super::analyzer::analyze_code;
 use super::compiler::compile_and_run;
@@ -16,9 +15,9 @@ use std::time::{Duration, Instant};
 /// 服务器配置结构体
 #[derive(Debug, Clone)]
 pub struct ServerConfig {
-    host: String,           // 绑定的主机地址
-    port: u16,              // 监听的端口号
-    max_workers: usize,     // 最大工作线程数
+    host: String,              // 绑定的主机地址
+    port: u16,                 // 监听的端口号
+    max_workers: usize,        // 最大工作线程数
     request_timeout_secs: u64, // 请求超时时间（秒）
 }
 
@@ -28,7 +27,7 @@ impl ServerConfig {
         ServerConfig {
             host: host.to_string(),
             port,
-            max_workers: 10,        // 默认最大工作线程数
+            max_workers: 10,          // 默认最大工作线程数
             request_timeout_secs: 30, // 默认超时时间
         }
     }
@@ -46,16 +45,19 @@ impl ServerConfig {
     }
 
     /// 获取主机地址
+    #[allow(dead_code)]
     pub fn get_host(&self) -> &str {
         &self.host
     }
 
     /// 获取端口号
+    #[allow(dead_code)]
     pub fn get_port(&self) -> u16 {
         self.port
     }
 
     /// 获取最大工作线程数
+    #[allow(dead_code)]
     pub fn get_max_workers(&self) -> usize {
         self.max_workers
     }
@@ -63,11 +65,11 @@ impl ServerConfig {
 
 /// CodeServer 结构体 - 核心服务器实例
 pub struct CodeServer {
-    config: ServerConfig,                                   // 服务器配置
-    request_count: Arc<Mutex<usize>>,                       // 请求计数器（线程安全）
-    stats: Arc<Mutex<HashMap<Language, ExecutionStats>>>,   // 各语言执行统计
-    start_time: Instant,                                    // 服务器启动时间
-    logger: Arc<Mutex<Logger>>,                             // 日志记录器
+    config: ServerConfig,                                 // 服务器配置
+    request_count: Arc<Mutex<usize>>,                     // 请求计数器（线程安全）
+    stats: Arc<Mutex<HashMap<Language, ExecutionStats>>>, // 各语言执行统计
+    start_time: Instant,                                  // 服务器启动时间
+    logger: Arc<Mutex<Logger>>,                           // 日志记录器
 }
 
 impl CodeServer {
@@ -86,8 +88,8 @@ impl CodeServer {
         }
 
         // 创建默认日志记录器
-        let logger = Logger::new(&super::config::LoggingConfig::default())
-            .expect("Failed to create logger");
+        let logger =
+            Logger::new(&super::config::LoggingConfig::default()).expect("Failed to create logger");
 
         CodeServer {
             config,
@@ -110,11 +112,20 @@ impl CodeServer {
     pub fn run(&self) -> std::io::Result<()> {
         let addr = format!("{}:{}", self.config.host, self.config.port);
         let listener = TcpListener::bind(&addr)?;
-        
+
         // 记录服务器启动信息
-        self.logger.lock().unwrap().log_server_start(&self.config.host, self.config.port);
-        self.logger.lock().unwrap().info(&format!("Max workers: {}", self.config.max_workers));
-        self.logger.lock().unwrap().info(&format!("Request timeout: {} seconds", self.config.request_timeout_secs));
+        self.logger
+            .lock()
+            .unwrap()
+            .log_server_start(&self.config.host, self.config.port);
+        self.logger
+            .lock()
+            .unwrap()
+            .info(&format!("Max workers: {}", self.config.max_workers));
+        self.logger.lock().unwrap().info(&format!(
+            "Request timeout: {} seconds",
+            self.config.request_timeout_secs
+        ));
 
         // 克隆共享状态供线程使用
         let request_count_clone = Arc::clone(&self.request_count);
@@ -139,7 +150,10 @@ impl CodeServer {
                     });
                 }
                 Err(e) => {
-                    self.logger.lock().unwrap().error(&format!("Failed to accept connection: {}", e));
+                    self.logger
+                        .lock()
+                        .unwrap()
+                        .error(&format!("Failed to accept connection: {}", e));
                 }
             }
         }
@@ -189,7 +203,7 @@ fn handle_client(
     logger: Arc<Mutex<Logger>>,
 ) -> std::io::Result<()> {
     let start_time = Instant::now();
-    
+
     // 设置读写超时
     stream.set_read_timeout(Some(Duration::from_secs(timeout)))?;
     stream.set_write_timeout(Some(Duration::from_secs(timeout)))?;
@@ -240,20 +254,25 @@ fn handle_client(
 
     // 根据请求方法和路径分发处理
     let response = match (method, path) {
-        ("GET", "/") => handle_index(),                    // 返回首页
-        ("POST", "/api/compile") => {                      // 编译执行代码
+        ("GET", "/") => handle_index(), // 返回首页
+        ("POST", "/api/compile") => {
+            // 编译执行代码
             let result = handle_compile(&body, &stats, &logger);
             let execution_time = start_time.elapsed().as_millis() as u64;
             format_response_with_time(&result, execution_time)
         }
-        ("POST", "/api/analyze") => {                      // 静态代码分析
+        ("POST", "/api/analyze") => {
+            // 静态代码分析
             let result = handle_analyze(&body, &logger);
             format_analysis_response(&result)
         }
-        
-        ("GET", "/health") => "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nOK".to_string(), // 健康检查
-        ("GET", "/stats") => handle_stats(&stats),         // 获取统计信息
-        _ => "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain\r\n\r\nNot Found".to_string(), // 未找到
+
+        ("GET", "/health") => {
+            "HTTP/1.1 200 OK\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\nOK".to_string()
+        } // 健康检查
+        ("GET", "/stats") => handle_stats(&stats), // 获取统计信息
+        _ => "HTTP/1.1 404 Not Found\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\nNot Found"
+            .to_string(), // 未找到
     };
 
     // 发送响应
@@ -265,23 +284,33 @@ fn handle_client(
 fn handle_index() -> String {
     match std::fs::read_to_string("frontend/index.html") {
         Ok(content) => format!(
-            "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: {}\r\n\r\n{}",
-            content.len(),
-            content
-        ),
-        Err(_) => "HTTP/1.1 500 Internal Server Error\r\nContent-Type: text/plain\r\n\r\nFailed to read index.html".to_string(),
+                "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=UTF-8\r\nContent-Length: {}\r\n\r\n{}",
+                content.len(),
+                content
+            ),
+        Err(_) => "HTTP/1.1 500 Internal Server Error\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\nFailed to read index.html".to_string(),
     }
 }
 
 /// 处理代码编译请求
-fn handle_compile(body: &str, stats: &Arc<Mutex<HashMap<Language, ExecutionStats>>>, logger: &Arc<Mutex<Logger>>) -> CodeResponse {
+fn handle_compile(
+    body: &str,
+    stats: &Arc<Mutex<HashMap<Language, ExecutionStats>>>,
+    logger: &Arc<Mutex<Logger>>,
+) -> CodeResponse {
     let start_time = Instant::now();
     let mut language_str = String::new();
     let mut code = String::new();
     let mut input = String::new();
 
-    logger.lock().unwrap().debug(&format!("Compile request received - Body length: {}", body.len()));
-    logger.lock().unwrap().debug(&format!("Request body: {}", body));
+    logger.lock().unwrap().debug(&format!(
+        "Compile request received - Body length: {}",
+        body.len()
+    ));
+    logger
+        .lock()
+        .unwrap()
+        .debug(&format!("Request body: {}", body));
 
     // 解析请求体（支持 JSON 和表单格式）
     if body.starts_with("{") {
@@ -290,7 +319,12 @@ fn handle_compile(body: &str, stats: &Arc<Mutex<HashMap<Language, ExecutionStats
             language_str = parsed.0;
             code = parsed.1;
             input = parsed.2;
-            logger.lock().unwrap().debug(&format!("JSON parsed successfully - Language: {}, Code length: {}, Input length: {}", language_str, code.len(), input.len()));
+            logger.lock().unwrap().debug(&format!(
+                "JSON parsed successfully - Language: {}, Code length: {}, Input length: {}",
+                language_str,
+                code.len(),
+                input.len()
+            ));
         } else {
             logger.lock().unwrap().error("Failed to parse JSON body");
             return CodeResponse::error("Failed to parse JSON request body".to_string(), None);
@@ -307,36 +341,55 @@ fn handle_compile(body: &str, stats: &Arc<Mutex<HashMap<Language, ExecutionStats
                 input = url_decode(part.split("=").nth(1).unwrap_or(""));
             }
         }
-        logger.lock().unwrap().debug(&format!("Form parsed - Language: {}, Code length: {}, Input length: {}", language_str, code.len(), input.len()));
+        logger.lock().unwrap().debug(&format!(
+            "Form parsed - Language: {}, Code length: {}, Input length: {}",
+            language_str,
+            code.len(),
+            input.len()
+        ));
     }
 
     // 解析语言类型
     let language = match Language::from_str(&language_str) {
         Some(lang) => lang,
         None => {
-            let result = CodeResponse::error(
-                format!("Language not supported: {}", language_str),
-                None,
-            );
-            logger.lock().unwrap().error(&format!("Language not supported: {}", language_str));
+            let result =
+                CodeResponse::error(format!("Language not supported: {}", language_str), None);
+            logger
+                .lock()
+                .unwrap()
+                .error(&format!("Language not supported: {}", language_str));
             update_stats(stats, &language_str, &result, 0);
             return result;
         }
     };
 
     // 执行编译运行
-    let input_opt = if input.is_empty() { None } else { Some(input.as_str()) };
+    let input_opt = if input.is_empty() {
+        None
+    } else {
+        Some(input.as_str())
+    };
     let result = compile_and_run(&language, &code, input_opt);
     let exec_time = start_time.elapsed().as_millis() as u64;
-    
+
     // 记录日志和统计
     if result.success {
-        logger.lock().unwrap().debug(&format!("Execution successful - Output length: {}", result.output.len()));
+        logger.lock().unwrap().debug(&format!(
+            "Execution successful - Output length: {}",
+            result.output.len()
+        ));
     } else {
-        logger.lock().unwrap().error(&format!("Execution failed - Errors: {}", result.errors));
+        logger
+            .lock()
+            .unwrap()
+            .error(&format!("Execution failed - Errors: {}", result.errors));
     }
-    
-    logger.lock().unwrap().log_request(&language_str, result.success, exec_time);
+
+    logger
+        .lock()
+        .unwrap()
+        .log_request(&language_str, result.success, exec_time);
     update_stats(stats, &language_str, &result, exec_time);
     result
 }
@@ -344,19 +397,21 @@ fn handle_compile(body: &str, stats: &Arc<Mutex<HashMap<Language, ExecutionStats
 /// 解析 JSON 请求体（简易实现）
 fn parse_json_body(body: &str) -> Result<(String, String, String), ()> {
     let body = body.trim();
-    
+
     // 解析 language 字段
     let language_start = body.find("\"language\"").ok_or(())?;
     let language_colon = body[language_start..].find(':').ok_or(())? + language_start;
-    let language_quote_start = body[language_colon + 1..].find('"').ok_or(())? + language_colon + 1 + 1;
-    let language_quote_end = body[language_quote_start..].find('"').ok_or(())? + language_quote_start;
+    let language_quote_start =
+        body[language_colon + 1..].find('"').ok_or(())? + language_colon + 1 + 1;
+    let language_quote_end =
+        body[language_quote_start..].find('"').ok_or(())? + language_quote_start;
     let language_str = body[language_quote_start..language_quote_end].to_string();
 
     // 解析 code 字段
     let code_start = body.find("\"code\"").ok_or(())?;
     let code_colon = body[code_start..].find(':').ok_or(())? + code_start;
     let code_quote_start = body[code_colon + 1..].find('"').ok_or(())? + code_colon + 1 + 1;
-    
+
     // 确定 code 字段的结束位置
     let input_start = body.find("\"input\"");
     let code_quote_end = if let Some(input_start) = input_start {
@@ -366,16 +421,20 @@ fn parse_json_body(body: &str) -> Result<(String, String, String), ()> {
     } else {
         body.rfind('"').ok_or(())?
     };
-    
+
     // 处理转义字符
-    let code_str = body[code_quote_start..code_quote_end].replace("\\n", "\n").replace("\\\"", "\"");
+    let code_str = body[code_quote_start..code_quote_end]
+        .replace("\\n", "\n")
+        .replace("\\\"", "\"");
 
     // 解析 input 字段（可选）
     let input_str = if let Some(input_start) = input_start {
         let input_colon = body[input_start..].find(':').ok_or(())? + input_start;
         let input_quote_start = body[input_colon + 1..].find('"').ok_or(())? + input_colon + 1 + 1;
         let input_quote_end = body[input_quote_start..].find('"').ok_or(())? + input_quote_start;
-        body[input_quote_start..input_quote_end].replace("\\n", "\n").replace("\\\"", "\"")
+        body[input_quote_start..input_quote_end]
+            .replace("\\n", "\n")
+            .replace("\\\"", "\"")
     } else {
         String::new()
     };
@@ -384,7 +443,12 @@ fn parse_json_body(body: &str) -> Result<(String, String, String), ()> {
 }
 
 /// 更新执行统计
-fn update_stats(stats: &Arc<Mutex<HashMap<Language, ExecutionStats>>>, language_str: &str, result: &CodeResponse, exec_time: u64) {
+fn update_stats(
+    stats: &Arc<Mutex<HashMap<Language, ExecutionStats>>>,
+    language_str: &str,
+    result: &CodeResponse,
+    exec_time: u64,
+) {
     if let Some(language) = Language::from_str(language_str) {
         let mut stats_map = stats.lock().unwrap();
         if let Some(stat) = stats_map.get_mut(&language) {
@@ -402,14 +466,21 @@ fn handle_analyze(body: &str, logger: &Arc<Mutex<Logger>>) -> AnalysisResponse {
     let mut language_str = String::new();
     let mut code = String::new();
 
-    logger.lock().unwrap().debug(&format!("Analyze request received - Body length: {}", body.len()));
+    logger.lock().unwrap().debug(&format!(
+        "Analyze request received - Body length: {}",
+        body.len()
+    ));
 
     // 解析请求体
     if body.starts_with("{") {
         if let Ok(parsed) = parse_json_body(body) {
             language_str = parsed.0;
             code = parsed.1;
-            logger.lock().unwrap().debug(&format!("JSON parsed - Language: {}, Code length: {}", language_str, code.len()));
+            logger.lock().unwrap().debug(&format!(
+                "JSON parsed - Language: {}, Code length: {}",
+                language_str,
+                code.len()
+            ));
         } else {
             logger.lock().unwrap().error("Failed to parse JSON body");
             return AnalysisResponse {
@@ -434,7 +505,10 @@ fn handle_analyze(body: &str, logger: &Arc<Mutex<Logger>>) -> AnalysisResponse {
     let language = match Language::from_str(&language_str) {
         Some(lang) => lang,
         None => {
-            logger.lock().unwrap().error(&format!("Language not supported: {}", language_str));
+            logger
+                .lock()
+                .unwrap()
+                .error(&format!("Language not supported: {}", language_str));
             return AnalysisResponse {
                 success: false,
                 issues: vec![],
@@ -445,10 +519,16 @@ fn handle_analyze(body: &str, logger: &Arc<Mutex<Logger>>) -> AnalysisResponse {
     };
 
     // 执行代码分析
-    logger.lock().unwrap().debug(&format!("Starting analysis for language: {}", language.as_str()));
+    logger.lock().unwrap().debug(&format!(
+        "Starting analysis for language: {}",
+        language.as_str()
+    ));
     let result = analyze_code(&language, &code);
-    logger.lock().unwrap().debug(&format!("Analysis complete - Found {} issues", result.issues.len()));
-    
+    logger.lock().unwrap().debug(&format!(
+        "Analysis complete - Found {} issues",
+        result.issues.len()
+    ));
+
     result
 }
 
@@ -456,7 +536,7 @@ fn handle_analyze(body: &str, logger: &Arc<Mutex<Logger>>) -> AnalysisResponse {
 fn format_analysis_response(result: &AnalysisResponse) -> String {
     let json = result.to_json();
     format!(
-        "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {}\r\n\r\n{}",
+        "HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {}\r\n\r\n{}",
         json.len(),
         json
     )
@@ -466,7 +546,7 @@ fn format_analysis_response(result: &AnalysisResponse) -> String {
 fn handle_stats(stats: &Arc<Mutex<HashMap<Language, ExecutionStats>>>) -> String {
     let stats_map = stats.lock().unwrap();
     let mut json = String::from("{\"languages\":[");
-    
+
     // 将统计数据转换为 JSON 数组
     let lang_stats: Vec<String> = stats_map
         .iter()
@@ -480,12 +560,12 @@ fn handle_stats(stats: &Arc<Mutex<HashMap<Language, ExecutionStats>>>) -> String
             )
         })
         .collect();
-    
+
     json.push_str(&lang_stats.join(","));
     json.push_str("]}");
-    
+
     format!(
-        "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {}\r\n\r\n{}",
+        "HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {}\r\n\r\n{}",
         json.len(),
         json
     )
@@ -520,7 +600,7 @@ fn format_response_with_time(result: &CodeResponse, execution_time: u64) -> Stri
     let json = result_with_time.to_json();
 
     format!(
-        "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {}\r\n\r\n{}",
+        "HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=UTF-8\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {}\r\n\r\n{}",
         json.len(),
         json
     )

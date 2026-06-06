@@ -1,6 +1,5 @@
-//! # 错误处理模块
-//! 
-//! 定义项目中使用的统一错误类型和错误处理工具。
+//错误处理模块
+//定义项目中使用的统一错误类型和错误处理工具。
 
 /// 代码执行相关的错误类型枚举
 #[derive(Debug, Clone, PartialEq)]
@@ -11,8 +10,8 @@ pub enum CodeError {
     RuntimeError(String),         // 运行时错误
     FileError(String),            // 文件操作错误
     InvalidRequest(String),       // 无效请求
-    Timeout,                     // 执行超时
-    InternalError,               // 内部服务器错误
+    Timeout,                      // 执行超时
+    InternalError,                // 内部服务器错误
 }
 
 impl std::fmt::Display for CodeError {

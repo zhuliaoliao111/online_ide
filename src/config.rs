@@ -1,7 +1,6 @@
-//! # 配置管理模块
-//! 
-//! 负责加载和管理应用程序配置，支持从 config.toml 文件加载配置或使用默认配置。
-//! 包含服务器、编译器和日志三个配置部分。
+//配置管理模块
+//负责加载和管理应用程序配置，支持从 config.toml 文件加载配置或使用默认配置。
+//包含服务器、编译器和日志三个配置部分。
 
 use std::collections::HashMap;
 use std::fs;
@@ -18,24 +17,24 @@ pub struct AppConfig {
 /// 服务器配置结构体
 #[derive(Debug, Clone)]
 pub struct ServerConfig {
-    host: String,           // 绑定的主机地址
-    port: u16,              // 监听端口
-    max_workers: usize,     // 最大工作线程数
-    timeout_secs: u64,      // 请求超时时间（秒）
+    host: String,            // 绑定的主机地址
+    port: u16,               // 监听端口
+    max_workers: usize,      // 最大工作线程数
+    timeout_secs: u64,       // 请求超时时间（秒）
     max_request_size: usize, // 最大请求大小（字节）
 }
 
 /// 编译器配置结构体
 #[derive(Debug, Clone)]
 pub struct CompilerConfig {
-    python_path: String,         // Python 解释器路径
-    java_path: String,           // Java 编译器路径
-    gcc_path: String,            // GCC 编译器路径
-    gpp_path: String,            // G++ 编译器路径
-    rustc_path: String,          // Rust 编译器路径
-    max_compile_time_secs: u64,  // 最大编译时间（秒）
-    max_run_time_secs: u64,      // 最大运行时间（秒）
-    temp_dir: String,            // 临时文件目录
+    python_path: String,        // Python 解释器路径
+    java_path: String,          // Java 编译器路径
+    gcc_path: String,           // GCC 编译器路径
+    gpp_path: String,           // G++ 编译器路径
+    rustc_path: String,         // Rust 编译器路径
+    max_compile_time_secs: u64, // 最大编译时间（秒）
+    max_run_time_secs: u64,     // 最大运行时间（秒）
+    temp_dir: String,           // 临时文件目录
 }
 
 /// 日志配置结构体
@@ -50,11 +49,11 @@ pub struct LoggingConfig {
 /// 日志级别枚举
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Copy)]
 pub enum LogLevel {
-    Trace,  // 最详细的日志级别，用于调试
-    Debug,  // 调试信息
-    Info,   // 一般信息
-    Warn,   // 警告信息
-    Error,  // 错误信息
+    Trace, // 最详细的日志级别，用于调试
+    Debug, // 调试信息
+    Info,  // 一般信息
+    Warn,  // 警告信息
+    Error, // 错误信息
 }
 
 impl LogLevel {
@@ -93,7 +92,9 @@ impl AppConfig {
     pub fn load_from_file(path: &str) -> Result<Self, ConfigError> {
         let path = Path::new(path);
         if !path.exists() {
-            return Err(ConfigError::FileNotFound(path.to_string_lossy().to_string()));
+            return Err(ConfigError::FileNotFound(
+                path.to_string_lossy().to_string(),
+            ));
         }
 
         let content = fs::read_to_string(path)?;
@@ -126,7 +127,10 @@ impl AppConfig {
         Ok(())
     }
 
-    fn parse_compiler_config(&mut self, config: &HashMap<String, String>) -> Result<(), ConfigError> {
+    fn parse_compiler_config(
+        &mut self,
+        config: &HashMap<String, String>,
+    ) -> Result<(), ConfigError> {
         if let Some(path) = config.get("compiler.python_path") {
             self.compiler.python_path = path.clone();
         }
@@ -154,10 +158,14 @@ impl AppConfig {
         Ok(())
     }
 
-    fn parse_logging_config(&mut self, config: &HashMap<String, String>) -> Result<(), ConfigError> {
+    fn parse_logging_config(
+        &mut self,
+        config: &HashMap<String, String>,
+    ) -> Result<(), ConfigError> {
         if let Some(level) = config.get("logging.level") {
-            self.logging.level = LogLevel::from_str(level)
-                .ok_or_else(|| ConfigError::InvalidValue("logging.level".to_string(), level.clone()))?;
+            self.logging.level = LogLevel::from_str(level).ok_or_else(|| {
+                ConfigError::InvalidValue("logging.level".to_string(), level.clone())
+            })?;
         }
         if let Some(path) = config.get("logging.file_path") {
             self.logging.file_path = Some(path.clone());

@@ -1,7 +1,6 @@
-//! # Online Code IDE Server
-//! 
-//! 在线代码 IDE 后端服务的主入口文件。
-//! 负责加载配置、初始化日志系统、启动 HTTP 服务器。
+//Online Code IDE Server
+//在线代码 IDE 后端服务的主入口文件。
+//负责加载配置、初始化日志系统、启动 HTTP 服务器。
 
 // 导入项目模块
 mod analyzer;
@@ -134,14 +133,14 @@ mod tests {
 
     #[test]
     fn test_compile_and_run_python() {
-        let result = compile_and_run(&Language::Python, "print('Hello, Python!')");
+        let result = compile_and_run(&Language::Python, "print('Hello, Python!')", None);
         assert!(result.success);
         assert!(result.output.contains("Hello, Python!"));
     }
 
     #[test]
     fn test_compile_and_run_python_error() {
-        let result = compile_and_run(&Language::Python, "print(undefined_variable)");
+        let result = compile_and_run(&Language::Python, "print(undefined_variable)", None);
         assert!(!result.success);
         assert!(!result.errors.is_empty());
     }
@@ -149,7 +148,7 @@ mod tests {
     #[test]
     fn test_compile_and_run_java() {
         let code = "public class Main { public static void main(String[] args) { System.out.println(\"Hello, Java!\"); } }";
-        let result = compile_and_run(&Language::Java, code);
+        let result = compile_and_run(&Language::Java, code, None);
         assert!(result.success);
         assert!(result.output.contains("Hello, Java!"));
     }
@@ -157,7 +156,7 @@ mod tests {
     #[test]
     fn test_compile_and_run_c() {
         let code = "#include <stdio.h>\nint main() { printf(\"Hello, C!\\n\"); return 0; }";
-        let result = compile_and_run(&Language::C, code);
+        let result = compile_and_run(&Language::C, code, None);
         assert!(result.success);
         assert!(result.output.contains("Hello, C!"));
     }
@@ -165,7 +164,7 @@ mod tests {
     #[test]
     fn test_compile_and_run_cpp() {
         let code = "#include <iostream>\nint main() { std::cout << \"Hello, C++!\" << std::endl; return 0; }";
-        let result = compile_and_run(&Language::Cpp, code);
+        let result = compile_and_run(&Language::Cpp, code, None);
         assert!(result.success);
         assert!(result.output.contains("Hello, C++!"));
     }
@@ -173,7 +172,7 @@ mod tests {
     #[test]
     fn test_compile_and_run_rust() {
         let code = "fn main() { println!(\"Hello, Rust!\"); }";
-        let result = compile_and_run(&Language::Rust, code);
+        let result = compile_and_run(&Language::Rust, code, None);
         assert!(result.success);
         assert!(result.output.contains("Hello, Rust!"));
     }
@@ -196,8 +195,8 @@ mod tests {
 
     #[test]
     fn test_code_response_with_execution_time() {
-        let response = CodeResponse::success("output".to_string(), Some(0))
-            .with_execution_time(123);
+        let response =
+            CodeResponse::success("output".to_string(), Some(0)).with_execution_time(123);
         assert_eq!(response.execution_time, Some(123));
     }
 
