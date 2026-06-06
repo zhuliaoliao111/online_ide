@@ -1,0 +1,10 @@
+[package]
+name = "code_ide_backend"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tempfile = "3.0"
+time = { version = "0.3", features = ["formatting", "parsing", "macros"] }
+
+[dev-dependencies]

@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Code IDE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: #ffffff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .header h1 {
+            color: #2563eb;
+            font-size: 1.5rem;
+        }
+        
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .lang-btn:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .lang-btn.active {
+            background: #2563eb;
+            border-color: #2563eb;
+            color: #ffffff;
+        }
+        
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .ide-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #e2e8f0;
+        }
+        
+        .editor-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toolbar {
+            background: #ffffff;
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .language-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #475569;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            min-width: 100px;
+        }
+        
+        .language-select:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+        
+        .language-select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .btn {
+            padding: 0.5rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .btn-run {
+            background: #2563eb;
+            color: #ffffff;
+        }
+        
+        .btn-run:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn-clear {
+            background: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .btn-clear:hover {
+            background: #e2e8f0;
+            color: #475569;
+        }
+        
+        #editor {
+            height: calc(100% - 52px);
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .input-container {
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+        
+        .input-label {
+            font-size: 1rem;
+            color: #2563eb;
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+        
+        .input-box {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            background: #ffffff;
+            color: #1e293b;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .input-box:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .input-box.required {
+            animation: pulse 1s infinite;
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .output-container {
+            height: 250px;
+            overflow: hidden;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .output-header {
+            background: #ffffff;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .output-header h3 {
+            color: #2563eb;
+            font-size: 1rem;
+            margin: 0;
+        }
+        
+        .output-content {
+            height: calc(100% - 46px);
+            background: #ffffff;
+            padding: 1rem;
+            overflow-y: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+        }
+        
+        .output-content pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .output-success {
+            color: #059669;
+        }
+        
+        .output-error {
+            color: #dc2626;
+        }
+        
+        .loading {
+            color: #2563eb;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .status-bar {
+            background: #ffffff;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #e2e8f0;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+        
+        /* AI Assistant Panel */
+        .ai-panel {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border-left: 1px solid #e2e8f0;
+        }
+        
+        .ai-header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 1rem 1.25rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .ai-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        
+        .ai-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .ai-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #fafafa;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+        }
+        
+        .message-avatar.user {
+            background: #2563eb;
+            color: #ffffff;
+        }
+        
+        .message-avatar.ai {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+        }
+        
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .message-bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .message-user .message-bubble {
+            background: #2563eb;
+            color: #ffffff;
+            border-bottom-right-radius: 0.25rem;
+        }
+        
+        .message-ai .message-bubble {
+            background: #ffffff;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 0.25rem;
+        }
+        
+        .message-ai .message-bubble code {
+            background: #f1f5f9;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        
+        .message-ai .message-bubble pre {
+            background: #f1f5f9;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 0.5rem 0;
+        }
+        
+        .message-ai .message-bubble pre code {
+            background: transparent;
+            padding: 0;
+            font-size: 0.8rem;
+        }
+        
+        .ai-input-container {
+            padding: 0.75rem;
+            border-top: 1px solid #e2e8f0;
+            background: #ffffff;
+        }
+        
+        .ai-input-wrapper {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .ai-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            outline: none;
+            resize: none;
+            min-height: 44px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .ai-input:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .ai-send-btn {
+            padding: 0.75rem 1.25rem;
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .ai-send-btn:hover {
+            background: #1d4ed8;
+        }
+        
+        .ai-send-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+        
+        .ai-action-btn {
+            padding: 0.25rem 0.5rem;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            color: #2563eb;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+        
+        .ai-action-btn:hover {
+            background: #dbeafe;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+        }
+        
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background: #94a3b8;
+            border-radius: 50%;
+            animation: typing-bounce 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing-bounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Online Code IDE</h1>
+    </div>
+    
+    <div class="main-container">
+        <div class="ide-panel">
+            <div class="editor-container">
+                <div class="toolbar">
+                    <div>
+                        <button class="btn btn-run" id="runBtn">▶ Run</button>
+                        <button class="btn btn-clear" id="clearBtn">🗑 Clear</button>
+                    </div>
+                    <div class="toolbar-right">
+                        <select class="language-select" id="languageSelect">
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="c">C</option>
+                            <option value="cpp">C++</option>
+                            <option value="rust">Rust</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="editor"></div>
+            </div>
+            
+            <div class="input-container" id="inputContainer">
+                <span class="input-label">Input:</span>
+                <textarea class="input-box" id="inputBox" placeholder="Enter input here..." rows="3"></textarea>
+                <button class="btn btn-run" id="submitInputBtn">Submit</button>
+            </div>
+            
+            <div class="output-container">
+                <div class="output-header">
+                    <h3>Output</h3>
+                </div>
+                <div class="output-content" id="outputContent">
+                    <pre class="loading">Click Run to execute your code...</pre>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Assistant Panel -->
+        <div class="ai-panel">
+            <div class="ai-header">
+                <div class="ai-avatar">🤖</div>
+                <div class="ai-title">AI Code Assistant</div>
+            </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="message message-ai">
+                    <div class="message-avatar ai">🤖</div>
+                    <div class="message-content">
+                        <div class="message-bubble">
+                            你好，请问你需要我做些什么？
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-input-container">
+                <div class="ai-input-wrapper">
+                    <textarea class="ai-input" id="aiInput" placeholder="输入你的问题，我可以帮你修改代码..." rows="2"></textarea>
+                    <button class="ai-send-btn" id="aiSendBtn">
+                        <span>发送</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="status-bar">
+        <span id="status">Ready</span>
+        <span id="language">Language: Python</span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.41.0/min/vs/loader.min.js"></script>
+    <script>
+        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.41.0/min/vs' }});
+        
+        let editor;
+        let currentLanguage = 'python';
+        let outputContent = '';
+        let debounceTimer = null;
+        let diagnosticsCollection = null;
+        
+        // 对话历史管理
+        let chatHistory = [];
+        
+        const codeTemplates = {
+            python: `print("Hello, World!")
+print("Welcome to Online Code IDE")
+
+# Variables and basic operations
+name = "Python"
+version = 3.11
+print(f"{name} version {version}")
+
+# Simple loop
+for i in range(1, 6):
+    print(f"Number: {i}")`,
+            java: `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+        System.out.println("Welcome to Online Code IDE");
+        
+        // Variables and basic operations
+        String name = "Java";
+        int version = 21;
+        System.out.println(name + " version " + version);
+        
+        // Simple loop
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Number: " + i);
+        }
+    }
+}`,
+            c: `#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\\n");
+    printf("Welcome to Online Code IDE\\n");
+    
+    // Variables and basic operations
+    char name[] = "C";
+    int version = 11;
+    printf("%s version %d\\n", name, version);
+    
+    // Simple loop
+    for (int i = 1; i <= 5; i++) {
+        printf("Number: %d\\n", i);
+    }
+    
+    return 0;
+}`,
+            cpp: `#include <iostream>
+using namespace std;
+
+int main() {
+    cout << "Hello, World!" << endl;
+    cout << "Welcome to Online Code IDE" << endl;
+    
+    // Variables and basic operations
+    string name = "C++";
+    int version = 23;
+    cout << name << " version " << version << endl;
+    
+    // Simple loop
+    for (int i = 1; i <= 5; i++) {
+        cout << "Number: " << i << endl;
+    }
+    
+    return 0;
+}`,
+            rust: `fn main() {
+    println!("Hello, World!");
+    println!("Welcome to Online Code IDE");
+    
+    // Variables and basic operations
+    let name = "Rust";
+    let version = 1.77;
+    println!("{} version {}", name, version);
+    
+    // Simple loop
+    for i in 1..=5 {
+        println!("Number: {}", i);
+    }
+}`
+        };
+        
+        require(['vs/editor/editor.main'], function() {
+            console.log('Monaco Editor loaded');
+            
+            editor = monaco.editor.create(document.getElementById('editor'), {
+                value: codeTemplates.python,
+                language: 'python',
+                theme: 'vs',
+                fontSize: 14,
+                lineNumbers: 'on',
+                minimap: { enabled: true },
+                scrollBeyondLastLine: false,
+                automaticLayout: true,
+                tabSize: 4,
+                insertSpaces: true,
+                wordWrap: 'on',
+                padding: { top: 16, bottom: 16 },
+            });
+            
+            console.log('Editor created:', editor);
+            
+            // Create diagnostics collection using the correct API for this Monaco version
+            if (monaco.editor.createDiagnosticCollection) {
+                diagnosticsCollection = monaco.editor.createDiagnosticCollection('code-analysis');
+            } else if (monaco.languages.createDiagnosticCollection) {
+                diagnosticsCollection = monaco.languages.createDiagnosticCollection('code-analysis');
+            } else {
+                diagnosticsCollection = {
+                    set: function(uri, diagnostics) {
+                        monaco.editor.setModelMarkers(uri, 'code-analysis', diagnostics);
+                    },
+                    clear: function() {
+                        if (editor && editor.getModel()) {
+                            monaco.editor.setModelMarkers(editor.getModel(), 'code-analysis', []);
+                        }
+                    }
+                };
+            }
+            console.log('Diagnostics collection created:', diagnosticsCollection);
+            
+            editor.focus();
+            
+            document.getElementById('editor').addEventListener('click', () => {
+                editor.focus();
+            });
+            
+            editor.onDidChangeModelContent(() => {
+                console.log('Model content changed');
+                triggerRealtimeAnalysis();
+            });
+            
+            console.log('Event listener registered');
+        });
+        
+        document.getElementById('languageSelect').addEventListener('change', (e) => {
+            currentLanguage = e.target.value;
+            
+            editor.getModel().setValue(codeTemplates[currentLanguage]);
+            monaco.editor.setModelLanguage(editor.getModel(), getMonacoLanguage(currentLanguage));
+            
+            document.getElementById('language').textContent = `Language: ${currentLanguage.charAt(0).toUpperCase() + currentLanguage.slice(1)}`;
+            
+            clearDiagnostics();
+        });
+        
+        document.getElementById('runBtn').addEventListener('click', runCode);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+        
+        // AI Assistant
+        document.getElementById('aiSendBtn').addEventListener('click', sendMessageToAI);
+        document.getElementById('aiInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessageToAI();
+            }
+        });
+        
+        function getMonacoLanguage(lang) {
+            const langMap = {
+                'python': 'python',
+                'java': 'java',
+                'c': 'c',
+                'cpp': 'cpp',
+                'rust': 'rust'
+            };
+            return langMap[lang] || 'python';
+        }
+        
+        async function runCode(inputValue = '') {
+            const code = editor.getValue();
+            if (!code.trim()) {
+                showOutput('Please write some code first!', true);
+                return;
+            }
+            
+            document.getElementById('status').textContent = 'Running...';
+            document.getElementById('outputContent').innerHTML = '<pre class="loading">Executing code...</pre>';
+            document.getElementById('inputBox').classList.remove('required');
+            
+            const needsInput = code.includes('cin') || code.includes('scanf') || code.includes('input(') || code.includes('raw_input') || code.includes('System.in');
+            console.log('Debug - needsInput:', needsInput, 'inputValue:', inputValue);
+            if (needsInput && !inputValue) {
+                document.getElementById('inputBox').classList.add('required');
+                document.getElementById('inputBox').focus();
+                document.getElementById('status').textContent = 'Waiting for input...';
+                document.getElementById('outputContent').innerHTML = '<pre class="loading">Waiting for input... Please enter your input below.</pre>';
+                return;
+            }
+            
+            try {
+                const formData = new URLSearchParams();
+                formData.append('language', currentLanguage);
+                formData.append('code', code);
+                if (inputValue) {
+                    formData.append('input', inputValue);
+                }
+                
+                const response = await fetch('/api/compile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const output = result.output || '(No output)';
+                    showOutput(output, false);
+                } else {
+                    const errorMsg = result.errors || 'Compilation/execution failed';
+                    showOutput(errorMsg, true);
+                }
+                
+                if (result.exit_code !== undefined) {
+                    document.getElementById('status').textContent = `Exit code: ${result.exit_code}`;
+                } else {
+                    document.getElementById('status').textContent = 'Done';
+                }
+            } catch (error) {
+                document.getElementById('status').textContent = 'Error';
+                showOutput('Failed to connect to server: ' + error.message, true);
+            }
+        }
+        
+        document.getElementById('submitInputBtn').addEventListener('click', () => {
+            const inputValue = document.getElementById('inputBox').value;
+            runCode(inputValue);
+        });
+        
+        // Enter key now inserts newline, user must click Submit button to submit
+        
+        function showOutput(content, isError = false) {
+            const el = document.getElementById('outputContent');
+            const className = isError ? 'output-error' : 'output-success';
+            el.innerHTML = `<pre class="${className}">${escapeHtml(content)}</pre>`;
+        }
+        
+        function clearDiagnostics() {
+            if (editor && editor.getModel()) {
+                monaco.editor.setModelMarkers(editor.getModel(), 'code-analysis', []);
+            }
+        }
+        
+        function clearAll() {
+            editor.getModel().setValue('');
+            outputContent = '';
+            document.getElementById('outputContent').innerHTML = '<pre class="loading">Click Run to execute your code...</pre>';
+            document.getElementById('status').textContent = 'Ready';
+            document.getElementById('inputBox').value = '';
+            clearDiagnostics();
+        }
+        
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+        
+        function triggerRealtimeAnalysis() {
+            console.log('Realtime analysis triggered');
+            if (debounceTimer) {
+                clearTimeout(debounceTimer);
+            }
+            
+            debounceTimer = setTimeout(() => {
+                const code = editor.getValue();
+                console.log('Code value:', code);
+                if (!code.trim()) {
+                    clearDiagnostics();
+                    return;
+                }
+                
+                performRealtimeAnalysis(code);
+            }, 800);
+        }
+        
+        async function performRealtimeAnalysis(code) {
+            console.log('performRealtimeAnalysis called');
+            console.log('diagnosticsCollection:', diagnosticsCollection);
+            console.log('editor:', editor);
+            
+            try {
+                const formData = new URLSearchParams();
+                formData.append('language', currentLanguage);
+                formData.append('code', code);
+                
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: formData
+                });
+                
+                const result = await response.json();
+                console.log('Analysis result:', result);
+                
+                if (result.success && result.issues && result.issues.length > 0) {
+                    const diagnostics = result.issues.map(issue => {
+                        const line = Math.max(0, issue.line - 1);
+                        const column = 0;
+                        
+                        return {
+                            severity: issue.severity === 'error' ? monaco.MarkerSeverity.Error : monaco.MarkerSeverity.Warning,
+                            startLineNumber: line + 1,
+                            startColumn: column + 1,
+                            endLineNumber: line + 1,
+                            endColumn: column + 100,
+                            message: `${issue.message} (Rule: ${issue.rule})`,
+                            source: 'code-analysis'
+                        };
+                    });
+                    
+                    if (editor && editor.getModel()) {
+                        console.log('Setting diagnostics');
+                        monaco.editor.setModelMarkers(editor.getModel(), 'code-analysis', diagnostics);
+                    }
+                    
+                    document.getElementById('status').textContent = `Analysis: ${result.issues.length} issue(s) found`;
+                } else {
+                    if (editor && editor.getModel()) {
+                        monaco.editor.setModelMarkers(editor.getModel(), 'code-analysis', []);
+                    }
+                    document.getElementById('status').textContent = 'Analysis: OK';
+                }
+            } catch (error) {
+                console.log('Realtime analysis error:', error);
+            }
+        }
+        
+        // AI Assistant Functions
+        function sendMessageToAI() {
+            const input = document.getElementById('aiInput').value.trim();
+            if (!input) return;
+            
+            const code = editor.getValue();
+            const fullMessage = `你是一个专业的代码助手，请帮助我处理以下${currentLanguage}代码。\n\n代码：\n\`\`\`${currentLanguage}\n${code}\n\`\`\`\n\n我的问题：${input}\n\n如果需要修改代码，请提供完整的代码并使用\`\`\`code\`\`\`格式包裹，我会提供"应用修改"按钮让用户确认。`;
+            
+            addMessage(input, 'user');
+            document.getElementById('aiInput').value = '';
+            showTypingIndicator(true);
+            
+            callAIAPI(fullMessage);
+        }
+        
+        function sendQuickMessage(message) {
+            const code = editor.getValue();
+            const fullMessage = `你是一个专业的代码助手，请帮助我处理以下${currentLanguage}代码。\n\n代码：\n\`\`\`${currentLanguage}\n${code}\n\`\`\`\n\n我的问题：${message}\n\n如果需要修改代码，请提供完整的代码并使用\`\`\`code\`\`\`格式包裹，我会提供"应用修改"按钮让用户确认。`;
+            
+            addMessage(message, 'user');
+            showTypingIndicator(true);
+            
+            callAIAPI(fullMessage);
+        }
+        
+        async function callAIAPI(prompt) {
+            // 保存用户消息到对话历史
+            chatHistory.push({ role: 'user', content: prompt });
+            
+            try {
+                // 构建完整的对话历史消息
+                const messages = chatHistory.map(msg => ({
+                    role: msg.role,
+                    content: msg.content
+                }));
+                
+                const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+                    },
+                    body: JSON.stringify({
+                        model: 'glm-4',
+                        messages: messages,
+                        temperature: 0.7
+                    })
+                });
+                
+                const result = await response.json();
+                
+                showTypingIndicator(false);
+                
+                if (result.choices && result.choices.length > 0) {
+                    const aiResponse = result.choices[0].message.content;
+                    // 保存AI响应到对话历史
+                    chatHistory.push({ role: 'assistant', content: aiResponse });
+                    addMessage(aiResponse, 'ai');
+                } else {
+                    addMessage('抱歉，AI服务返回异常：' + JSON.stringify(result), 'ai');
+                }
+            } catch (error) {
+                showTypingIndicator(false);
+                addMessage('网络错误，无法连接到AI服务：' + error.message, 'ai');
+            }
+        }
+        
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${sender}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = `message-avatar ${sender}`;
+            avatar.textContent = sender === 'user' ? '👤' : '🤖';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            
+            if (sender === 'user') {
+                bubble.textContent = text;
+            } else {
+                bubble.innerHTML = formatAIResponse(text);
+            }
+            
+            content.appendChild(bubble);
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+            messagesContainer.appendChild(messageDiv);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function showTypingIndicator(show) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const typingIndicator = document.querySelector('.typing-indicator');
+            
+            if (show) {
+                if (!typingIndicator) {
+                    const indicator = document.createElement('div');
+                    indicator.className = 'typing-indicator';
+                    indicator.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+                    messagesContainer.appendChild(indicator);
+                }
+            } else {
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        function formatAIResponse(text) {
+            text = text.replace(/```(\w+)?\n([\s\S]*?)```/g, (match, lang, code) => {
+                const encodedCode = encodeURIComponent(code.trim());
+                return `<pre><code>${code.trim()}</code></pre><button class="ai-action-btn" onclick="applyCodeChange('${encodedCode}')">应用此修改</button>`;
+            });
+            text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+            text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\n/g, '<br>');
+            return text;
+        }
+        
+        function applyCodeChange(encodedCode) {
+            const code = decodeURIComponent(encodedCode);
+            editor.getModel().setValue(code);
+            showToast('代码已更新！');
+        }
+        
+        function updateEditorCode(newCode) {
+            editor.getModel().setValue(decodeURIComponent(newCode));
+            showToast('代码已更新！');
+        }
+        
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 60px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #2563eb;
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.5rem;
+                font-size: 0.9rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: fadeInUp 0.3s ease;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 2000);
+        }
+        
+            </script>
+</body>
+</html>

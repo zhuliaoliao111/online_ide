@@ -1,0 +1,648 @@
+[2026-06-03 13:40:17:870566300] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:40:17:870682400] [INFO] Configuration loaded successfully
+[2026-06-03 13:40:17:878803100] [INFO] Starting server...
+[2026-06-03 13:40:17:885556400] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:40:17:885608200] [INFO] Max workers: 10
+[2026-06-03 13:40:17:885625400] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:40:37:387344400] [INFO] AI chat request received
+[2026-06-03 13:40:37:435295200] [ERROR] AI API request failed: 
+[2026-06-03 13:40:54:988765600] [INFO] AI chat request received
+[2026-06-03 13:40:55:039022000] [ERROR] AI API request failed: 
+[2026-06-03 13:42:12:572762500] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:42:12:572846000] [INFO] Configuration loaded successfully
+[2026-06-03 13:42:12:583414400] [INFO] Starting server...
+[2026-06-03 13:42:12:589526900] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:42:12:589565700] [INFO] Max workers: 10
+[2026-06-03 13:42:12:589574500] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:43:33:705613300] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:43:33:705724500] [INFO] Configuration loaded successfully
+[2026-06-03 13:43:33:719205600] [INFO] Starting server...
+[2026-06-03 13:43:33:725388700] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:43:33:725432300] [INFO] Max workers: 10
+[2026-06-03 13:43:33:725440300] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:44:10:159247800] [INFO] AI chat request received
+[2026-06-03 13:44:10:296788400] [ERROR] AI API request failed: ���� -File��C:\Users\zhu\AppData\Local\Temp\.tmpQJUNXh��ʧ�ܣ���Ϊ���ļ������� '.ps1' ��չ������ָ��һ����Ч�� Windows PowerShell �ű��ļ�����Ȼ�����ԡ�
+
+[2026-06-03 13:44:40:493397100] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:44:40:493494400] [INFO] Configuration loaded successfully
+[2026-06-03 13:44:40:506064500] [INFO] Starting server...
+[2026-06-03 13:44:40:512347000] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:44:40:512385200] [INFO] Max workers: 10
+[2026-06-03 13:44:40:512394200] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:44:49:449689200] [INFO] AI chat request received
+[2026-06-03 13:44:49:674713400] [ERROR] AI API request failed: �ļ���C:\Users\zhu\AppData\Local\Temp\.tmpjbxQS2.ps1��������һ����ʹ�ã���˸ý����޷����ʴ��ļ���
+    + CategoryInfo          : ObjectNotFound: (:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+[2026-06-03 13:45:59:586492000] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:45:59:586604900] [INFO] Configuration loaded successfully
+[2026-06-03 13:45:59:603338800] [INFO] Starting server...
+[2026-06-03 13:45:59:609421100] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:45:59:609467000] [INFO] Max workers: 10
+[2026-06-03 13:45:59:609476900] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:46:07:050681000] [INFO] AI chat request received
+[2026-06-03 13:46:07:280165100] [ERROR] AI API request failed: �ļ���D:\code\rust\code_ide_backend\.tmp0dNhkR.ps1��������һ����ʹ�ã���˸ý����޷����ʴ��ļ���
+    + CategoryInfo          : ObjectNotFound: (:String) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+[2026-06-03 13:47:00:307220800] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:47:00:307332600] [INFO] Configuration loaded successfully
+[2026-06-03 13:47:00:321095600] [INFO] Starting server...
+[2026-06-03 13:47:00:327368900] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:47:00:327402500] [INFO] Max workers: 10
+[2026-06-03 13:47:00:327411100] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:47:11:306720100] [INFO] AI chat request received
+[2026-06-03 13:47:38:971786700] [INFO] AI chat request received
+[2026-06-03 13:47:59:996790200] [INFO] AI chat request received
+[2026-06-03 13:48:29:064557300] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:48:29:064643700] [INFO] Configuration loaded successfully
+[2026-06-03 13:48:29:072669000] [INFO] Starting server...
+[2026-06-03 13:48:29:078919700] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:48:29:078956800] [INFO] Max workers: 10
+[2026-06-03 13:48:29:078965400] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:48:38:605604300] [INFO] AI chat request received
+[2026-06-03 13:48:38:605688000] [DEBUG] AI chat request body: {
+    "messages":  [
+                     {
+                         "content":  "hello",
+                         "role":  "user"
+                     }
+                 ],
+    "model":  "glm-4",
+    "temperature":  0.7
+}
+[2026-06-03 13:48:38:606218600] [DEBUG] Created temp script: .tmp_ai_chat_30712.ps1
+[2026-06-03 13:48:38:991547200] [DEBUG] AI chat request successful
+[2026-06-03 13:49:56:960837500] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:49:56:960956600] [INFO] Configuration loaded successfully
+[2026-06-03 13:49:56:977149200] [INFO] Starting server...
+[2026-06-03 13:49:56:983219400] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:49:56:983257800] [INFO] Max workers: 10
+[2026-06-03 13:49:56:983266200] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:50:06:959072200] [INFO] AI chat request received
+[2026-06-03 13:50:06:959138400] [DEBUG] AI chat request body: {
+    "messages":  [
+                     {
+                         "content":  "hello",
+                         "role":  "user"
+                     }
+                 ],
+    "model":  "glm-4",
+    "temperature":  0.7
+}
+[2026-06-03 13:50:06:959769600] [DEBUG] Created temp script: .tmp_ai_chat_33308.ps1
+[2026-06-03 13:50:07:294932300] [DEBUG] PowerShell stdout: 
+[2026-06-03 13:50:07:294977200] [DEBUG] PowerShell stderr: D:\code\rust\code_ide_backend\.tmp_ai_chat_33308.ps1 : ��Ч�� URI: δ�ܷ�����������
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,.tmp_ai_chat_33308.ps1
+ 
+
+[2026-06-03 13:50:07:294991900] [WARN] AI API response is empty
+[2026-06-03 13:51:18:872616900] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:51:18:872698200] [INFO] Configuration loaded successfully
+[2026-06-03 13:51:18:887847300] [INFO] Starting server...
+[2026-06-03 13:51:18:894603100] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:51:18:894643400] [INFO] Max workers: 10
+[2026-06-03 13:51:18:894652400] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:51:29:352339000] [INFO] AI chat request received
+[2026-06-03 13:51:29:352419900] [DEBUG] AI chat request body: {
+    "messages":  [
+                     {
+                         "content":  "hello",
+                         "role":  "user"
+                     }
+                 ],
+    "model":  "glm-4",
+    "temperature":  0.7
+}
+[2026-06-03 13:51:29:352456500] [DEBUG] Script content:
+
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer "64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN"'
+}
+$body = '{`n    "messages":  [`n                     {`n                         "content":  "hello",`n                         "role":  "user"`n                     }`n                 ],`n    "model":  "glm-4",`n    "temperature":  0.7`n}'
+try {
+    $response = Invoke-RestMethod -Uri '"https://open.bigmodel.cn/api/paas/v4/chat/completions"' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+
+[2026-06-03 13:51:29:354132100] [DEBUG] Created temp script: .tmp_ai_chat_31980.ps1
+[2026-06-03 13:51:29:355282700] [DEBUG] Written script content:
+
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer "64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN"'
+}
+$body = '{`n    "messages":  [`n                     {`n                         "content":  "hello",`n                         "role":  "user"`n                     }`n                 ],`n    "model":  "glm-4",`n    "temperature":  0.7`n}'
+try {
+    $response = Invoke-RestMethod -Uri '"https://open.bigmodel.cn/api/paas/v4/chat/completions"' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+
+[2026-06-03 13:51:29:709695900] [DEBUG] PowerShell stdout: 
+[2026-06-03 13:51:29:709741200] [DEBUG] PowerShell stderr: D:\code\rust\code_ide_backend\.tmp_ai_chat_31980.ps1 : ��Ч�� URI: δ�ܷ�����������
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,.tmp_ai_chat_31980.ps1
+ 
+
+[2026-06-03 13:51:29:709756200] [WARN] AI API response is empty
+[2026-06-03 13:52:42:161986900] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:52:42:162062400] [INFO] Configuration loaded successfully
+[2026-06-03 13:52:42:188835100] [INFO] Starting server...
+[2026-06-03 13:52:42:195371000] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:52:42:195415000] [INFO] Max workers: 10
+[2026-06-03 13:52:42:195424200] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:52:53:685568100] [INFO] AI chat request received
+[2026-06-03 13:52:53:685630100] [DEBUG] AI chat request body: {
+    "messages":  [
+                     {
+                         "content":  "hello",
+                         "role":  "user"
+                     }
+                 ],
+    "model":  "glm-4",
+    "temperature":  0.7
+}
+[2026-06-03 13:52:53:685652300] [DEBUG] Script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = '{
+    "messages":  [
+                     {
+                         "content":  "hello",
+                         "role":  "user"
+                     }
+                 ],
+    "model":  "glm-4",
+    "temperature":  0.7
+}'
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:52:53:686171100] [DEBUG] Created temp script: .tmp_ai_chat_14100.ps1
+[2026-06-03 13:52:53:695425200] [DEBUG] Written script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = '{
+    "messages":  [
+                     {
+                         "content":  "hello",
+                         "role":  "user"
+                     }
+                 ],
+    "model":  "glm-4",
+    "temperature":  0.7
+}'
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:52:54:599006600] [DEBUG] PowerShell stdout: {
+    "choices":  [
+                    {
+                        "finish_reason":  "stop",
+                        "index":  0,
+                        "message":  {
+                                        "content":  "Hello! ?? How can I assist you today?",
+                                        "role":  "assistant"
+                                    }
+                    }
+                ],
+    "created":  1780494774,
+    "id":  "20260603215254d2b4e5f4b90142cc",
+    "model":  "glm-4",
+    "object":  "chat.completion",
+    "request_id":  "20260603215254d2b4e5f4b90142cc",
+    "usage":  {
+                  "completion_tokens":  12,
+                  "prompt_tokens":  10,
+                  "total_tokens":  22
+              }
+}
+
+[2026-06-03 13:52:54:599068300] [DEBUG] PowerShell stderr: 
+[2026-06-03 13:52:54:599090300] [DEBUG] AI chat request successful
+[2026-06-03 13:55:21:249021800] [INFO] AI chat request received
+[2026-06-03 13:55:21:249115200] [DEBUG] AI chat request body: {"model":"glm-4","messages":[{"role":"user","content":"你是一个专业的代码助手，请帮助我处理以下python代码。\n\n代码：\n```python\nprint(\"Hello, World!\")\nprint(\"Welcome to Online Code IDE\")\n\n# Variables and basic operations\nname = \"Python\"\nversion = 3.11\nprint(f\"{name} version {version}\")\n\n# Simple loop\nfor i in range(1, 6):\n    print(f\"Number: {i}\")\n```\n\n我的问题：写一个简单代码\n\n如果需要修改代码，请提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认。"}],"temperature":0.7}
+[2026-06-03 13:55:21:249134600] [DEBUG] Script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = '{"model":"glm-4","messages":[{"role":"user","content":"你是一个专业的代码助手，请帮助我处理以下python代码。\n\n代码：\n```python\nprint(\"Hello, World!\")\nprint(\"Welcome to Online Code IDE\")\n\n# Variables and basic operations\nname = \"Python\"\nversion = 3.11\nprint(f\"{name} version {version}\")\n\n# Simple loop\nfor i in range(1, 6):\n    print(f\"Number: {i}\")\n```\n\n我的问题：写一个简单代码\n\n如果需要修改代码，请提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认。"}],"temperature":0.7}'
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:55:21:249602000] [DEBUG] Created temp script: .tmp_ai_chat_14100.ps1
+[2026-06-03 13:55:21:276496300] [DEBUG] Written script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = '{"model":"glm-4","messages":[{"role":"user","content":"你是一个专业的代码助手，请帮助我处理以下python代码。\n\n代码：\n```python\nprint(\"Hello, World!\")\nprint(\"Welcome to Online Code IDE\")\n\n# Variables and basic operations\nname = \"Python\"\nversion = 3.11\nprint(f\"{name} version {version}\")\n\n# Simple loop\nfor i in range(1, 6):\n    print(f\"Number: {i}\")\n```\n\n我的问题：写一个简单代码\n\n如果需要修改代码，请提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认。"}],"temperature":0.7}'
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:55:21:555371000] [DEBUG] PowerShell stdout: 
+[2026-06-03 13:55:21:555418300] [DEBUG] PowerShell stderr: ����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 470
++ ... �提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"te
+mp ...
++                                                              ~~~~
+����ʽ������а�������ı�ǡ�认�?����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 474
++ ... ��供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"temp
+e ...
++                                                                 ~
+����ʽ������а�������ı�ǡ�}����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 476
++ ... �完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"tempera 
+...
++                                                                 ~
+�����б���ȱ�ٲ�����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 494
++ ... 用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"temperature":0.7}'
++                                                                        ~
+����ʽ������а�������ı�ǡ�}����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:7 �ַ�: 94
++ ... /paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
++                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+�ַ���ȱ����ֹ��: '��
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:7 �ַ�: 41
++ ... ethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -M ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+����ʽ������а�������ı�ǡ�https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Bod
+y $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}����
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+
+[2026-06-03 13:55:21:555487800] [ERROR] AI API request failed - stdout: , stderr: ����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 470
++ ... �提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"te
+mp ...
++                                                              ~~~~
+����ʽ������а�������ı�ǡ�认�?����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 474
++ ... ��供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"temp
+e ...
++                                                                 ~
+����ʽ������а�������ı�ǡ�}����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 476
++ ... �完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"tempera 
+...
++                                                                 ~
+�����б���ȱ�ٲ�����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 494
++ ... 用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"temperature":0.7}'
++                                                                        ~
+����ʽ������а�������ı�ǡ�}����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:7 �ַ�: 94
++ ... /paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
++                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+�ַ���ȱ����ֹ��: '��
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:7 �ַ�: 41
++ ... ethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -M ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+����ʽ������а�������ı�ǡ�https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Bod
+y $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}����
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+
+[2026-06-03 13:56:13:192868200] [DEBUG] Analyze request received - Body length: 335
+[2026-06-03 13:56:13:193017200] [DEBUG] Starting analysis for language: python
+[2026-06-03 13:56:13:552784400] [DEBUG] Analysis complete - Found 0 issues
+[2026-06-03 13:56:17:168574100] [INFO] AI chat request received
+[2026-06-03 13:56:17:168646800] [DEBUG] AI chat request body: {"model":"glm-4","messages":[{"role":"user","content":"你是一个专业的代码助手，请帮助我处理以下python代码。\n\n代码：\n```python\ncirprint(\"Hello, World!\")\nprint(\"Welcome to Online Code IDE\")\n\n# Variables and basic operations\nname = \"Python\"\nversion = 3.11\nprint(f\"{name} version {version}\")\n\n# Simple loop\nfor i in range(1, 6):\n    print(f\"Number: {i}\")\n```\n\n我的问题：写一个简单代码\n\n如果需要修改代码，请提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认。"}],"temperature":0.7}
+[2026-06-03 13:56:17:168670600] [DEBUG] Script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = '{"model":"glm-4","messages":[{"role":"user","content":"你是一个专业的代码助手，请帮助我处理以下python代码。\n\n代码：\n```python\ncirprint(\"Hello, World!\")\nprint(\"Welcome to Online Code IDE\")\n\n# Variables and basic operations\nname = \"Python\"\nversion = 3.11\nprint(f\"{name} version {version}\")\n\n# Simple loop\nfor i in range(1, 6):\n    print(f\"Number: {i}\")\n```\n\n我的问题：写一个简单代码\n\n如果需要修改代码，请提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认。"}],"temperature":0.7}'
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:56:17:169191500] [DEBUG] Created temp script: .tmp_ai_chat_14100.ps1
+[2026-06-03 13:56:17:179969000] [DEBUG] Written script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = '{"model":"glm-4","messages":[{"role":"user","content":"你是一个专业的代码助手，请帮助我处理以下python代码。\n\n代码：\n```python\ncirprint(\"Hello, World!\")\nprint(\"Welcome to Online Code IDE\")\n\n# Variables and basic operations\nname = \"Python\"\nversion = 3.11\nprint(f\"{name} version {version}\")\n\n# Simple loop\nfor i in range(1, 6):\n    print(f\"Number: {i}\")\n```\n\n我的问题：写一个简单代码\n\n如果需要修改代码，请提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认。"}],"temperature":0.7}'
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:56:17:447372500] [DEBUG] PowerShell stdout: 
+[2026-06-03 13:56:17:447414200] [DEBUG] PowerShell stderr: ����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 473
++ ... �提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"te
+mp ...
++                                                              ~~~~
+����ʽ������а�������ı�ǡ�认�?����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 477
++ ... ��供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"temp
+e ...
++                                                                 ~
+����ʽ������а�������ı�ǡ�}����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 479
++ ... �完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"tempera 
+...
++                                                                 ~
+�����б���ȱ�ٲ�����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 497
++ ... 用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"temperature":0.7}'
++                                                                        ~
+����ʽ������а�������ı�ǡ�}����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:7 �ַ�: 94
++ ... /paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
++                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+�ַ���ȱ����ֹ��: '��
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:7 �ַ�: 41
++ ... ethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -M ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+����ʽ������а�������ı�ǡ�https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Bod
+y $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}����
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+
+[2026-06-03 13:56:17:447461100] [ERROR] AI API request failed - stdout: , stderr: ����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 473
++ ... �提供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"te
+mp ...
++                                                              ~~~~
+����ʽ������а�������ı�ǡ�认�?����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 477
++ ... ��供完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"temp
+e ...
++                                                                 ~
+����ʽ������а�������ı�ǡ�}����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 479
++ ... �完整的代码并使用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"tempera 
+...
++                                                                 ~
+�����б���ȱ�ٲ�����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:5 �ַ�: 497
++ ... 用```code```格式包裹，我会提供\"应用修改\"按钮让用户确认�?}],"temperature":0.7}'
++                                                                        ~
+����ʽ������а�������ı�ǡ�}����
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:7 �ַ�: 94
++ ... /paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
++                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+�ַ���ȱ����ֹ��: '��
+����λ�� D:\code\rust\code_ide_backend\.tmp_ai_chat_14100.ps1:7 �ַ�: 41
++ ... ethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -M ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+����ʽ������а�������ı�ǡ�https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Bod
+y $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}����
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+
+[2026-06-03 13:57:37:005567200] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:57:37:005679000] [INFO] Configuration loaded successfully
+[2026-06-03 13:57:37:064010100] [INFO] Starting server...
+[2026-06-03 13:57:37:070523800] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:57:37:070565600] [INFO] Max workers: 10
+[2026-06-03 13:57:37:070575500] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:58:16:357623500] [INFO] AI chat request received
+[2026-06-03 13:58:16:357778100] [DEBUG] AI chat request body: {"model":"glm-4","messages":[{"role":"user","content":"???????????}],"temperature":0.7}
+[2026-06-03 13:58:16:357839200] [DEBUG] Script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eyJtb2RlbCI6ImdsbS00IiwibWVzc2FnZXMiOlt7InJvbGUiOiJ1c2VyIiwiY29udGVudCI6Ij8/Pz8/Pz8/Pz8/fV0sInRlbXBlcmF0dXJlIjowLjd9'))
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:58:16:359039800] [DEBUG] Created temp script: .tmp_ai_chat_23816.ps1
+[2026-06-03 13:58:16:380316600] [DEBUG] Written script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eyJtb2RlbCI6ImdsbS00IiwibWVzc2FnZXMiOlt7InJvbGUiOiJ1c2VyIiwiY29udGVudCI6Ij8/Pz8/Pz8/Pz8/fV0sInRlbXBlcmF0dXJlIjowLjd9'))
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:58:17:003231300] [DEBUG] PowerShell stdout: 
+[2026-06-03 13:58:17:003276000] [DEBUG] PowerShell stderr: D:\code\rust\code_ide_backend\.tmp_ai_chat_23816.ps1 : Զ�̷��������ش���: (400) ���������
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,.tmp_ai_chat_23816.ps1
+ 
+
+[2026-06-03 13:58:17:003289200] [WARN] AI API response is empty
+[2026-06-03 13:59:10:266795000] [INFO] === Online Code IDE Server ===
+[2026-06-03 13:59:10:266915200] [INFO] Configuration loaded successfully
+[2026-06-03 13:59:10:306409900] [INFO] Starting server...
+[2026-06-03 13:59:10:312800000] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 13:59:10:312858300] [INFO] Max workers: 10
+[2026-06-03 13:59:10:312872300] [INFO] Request timeout: 30 seconds
+[2026-06-03 13:59:21:661412000] [INFO] AI chat request received
+[2026-06-03 13:59:21:661520600] [DEBUG] AI chat request body: {"model":"glm-4","messages":[{"role":"user","content":"???????????}],"temperature":0.7}
+[2026-06-03 13:59:21:661568500] [DEBUG] Script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eyJtb2RlbCI6ImdsbS00IiwibWVzc2FnZXMiOlt7InJvbGUiOiJ1c2VyIiwiY29udGVudCI6Ij8/Pz8/Pz8/Pz8/fV0sInRlbXBlcmF0dXJlIjowLjd9'))
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:59:21:662361300] [DEBUG] Created temp script: .tmp_ai_chat_34108.ps1
+[2026-06-03 13:59:21:663558700] [DEBUG] Written script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eyJtb2RlbCI6ImdsbS00IiwibWVzc2FnZXMiOlt7InJvbGUiOiJ1c2VyIiwiY29udGVudCI6Ij8/Pz8/Pz8/Pz8/fV0sInRlbXBlcmF0dXJlIjowLjd9'))
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 13:59:22:112347900] [DEBUG] PowerShell stdout: 
+[2026-06-03 13:59:22:112419300] [DEBUG] PowerShell stderr: D:\code\rust\code_ide_backend\.tmp_ai_chat_34108.ps1 : Զ�̷��������ش���: (400) ���������
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,.tmp_ai_chat_34108.ps1
+ 
+
+[2026-06-03 13:59:22:112438300] [WARN] AI API response is empty
+[2026-06-03 14:00:30:300687100] [INFO] === Online Code IDE Server ===
+[2026-06-03 14:00:30:300850600] [INFO] Configuration loaded successfully
+[2026-06-03 14:00:30:380529500] [INFO] Starting server...
+[2026-06-03 14:00:30:386850300] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 14:00:30:386887200] [INFO] Max workers: 10
+[2026-06-03 14:00:30:386895700] [INFO] Request timeout: 30 seconds
+[2026-06-03 14:00:53:557184100] [INFO] AI chat request received
+[2026-06-03 14:00:53:557279500] [DEBUG] AI chat request body: {"model":"glm-4","messages":[{"role":"user","content":"write a simple hello world code"}],"temperature":0.7}
+[2026-06-03 14:00:53:557324500] [DEBUG] Script content:
+$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eyJtb2RlbCI6ImdsbS00IiwibWVzc2FnZXMiOlt7InJvbGUiOiJ1c2VyIiwiY29udGVudCI6IndyaXRlIGEgc2ltcGxlIGhlbGxvIHdvcmxkIGNvZGUifV0sInRlbXBlcmF0dXJlIjowLjd9'))
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 14:00:53:558268400] [DEBUG] Created temp script: .tmp_ai_chat_33180.ps1
+[2026-06-03 14:00:53:588327900] [DEBUG] Written script content:
+﻿$headers = @{
+    'Content-Type' = 'application/json'
+    'Authorization' = 'Bearer 64c9b0ad606d4edebca3e37c71367380.aLtnY7xUhaQzXsEN'
+}
+$body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('eyJtb2RlbCI6ImdsbS00IiwibWVzc2FnZXMiOlt7InJvbGUiOiJ1c2VyIiwiY29udGVudCI6IndyaXRlIGEgc2ltcGxlIGhlbGxvIHdvcmxkIGNvZGUifV0sInRlbXBlcmF0dXJlIjowLjd9'))
+try {
+    $response = Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas/v4/chat/completions' -Method Post -Headers $headers -Body $body
+    $response | ConvertTo-Json -Depth 10
+} catch {
+    Write-Error $_.Exception.Message
+}
+[2026-06-03 14:01:17:599658200] [DEBUG] PowerShell stdout: {
+    "choices":  [
+                    {
+                        "finish_reason":  "stop",
+                        "index":  0,
+                        "message":  {
+                                        "content":  "Of course! The \"Hello, World!\" program is the traditional first program you write when learning a new language. It simply prints the text \"Hello, World!\" to the screen.\n\nHere are examples in some of the most popular programming languages.\n\n### Python\nThis is often considered one of the simplest and most readable languages for beginners.\n\n**File:** `hello.py`\n```python\nprint(\"Hello, World!\")\n```\n\n**To run it:**\n```bash\npython hello.py\n```\n\n---\n\n### JavaScript\nThis is the language of the web. You can run it in a browser console or on a server with Node.js.\n\n**File:** `hello.js`\n```javascript\nconsole.log(\"Hello, World!\");\n```\n\n**To run it (using Node.js):**\n```bash\nnode hello.js\n```\nAlternatively, you can paste this code directly into the developer console of your web browser (like Chrome or Firefox) by pressing `F12`.\n\n---\n\n### Java\nJava is a very popular, structured language often used in large enterprise applications.\n\n**File:** `HelloWorld.java`\n```java\npublic class HelloWorld {\n    public static void main(String[] args) {\n        System.out.println(\"Hello, World!\");\n    }\n}\n```\n\n**To run it:**\n```bash\n# 1. Compile the code into a .class file\njavac HelloWorld.java\n\n# 2. Run the compiled code\njava HelloWorld\n```\n\n---\n\n### C++\nA powerful, high-performance language. The syntax is a bit more involved than Python or JavaScript.\n\n**File:** `hello.cpp`\n```cpp\n#include \u003ciostream\u003e\n\nint main() {\n    std::cout \u003c\u003c \"Hello, World!\" \u003c\u003c std::endl;\n    return 0;\n}\n```\n\n**To run it:**\n```bash\n# 1. Compile the code\ng++ hello.cpp -o hello\n\n# 2. Run the executable\n./hello\n```\n\n---\n\n### HTML\nWhile not a programming language, HTML (HyperText Markup Language) is the standard for creating web pages. You can create a \"Hello, World!\" page with it.\n\n**File:** `index.html`\n```html\n\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n    \u003ctitle\u003eHello World Page\u003c/title\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n\n    \u003ch1\u003eHello, World!\u003c/h1\u003e\n\n\u003c/body\u003e\n\u003c/html\u003e\n```\n\n**To run it:**\nSave the file as `index.html` and open it in any web browser (like Chrome, Firefox, or Safari).\n\nChoose the one that interests you most and give it a try",
+                                        "role":  "assistant"
+                                    }
+                    }
+                ],
+    "created":  1780495277,
+    "id":  "20260603220053f2854758e6a54fbf",
+    "model":  "glm-4",
+    "object":  "chat.completion",
+    "request_id":  "20260603220053f2854758e6a54fbf",
+    "usage":  {
+                  "completion_tokens":  527,
+                  "prompt_tokens":  15,
+                  "total_tokens":  542
+              }
+}
+
+[2026-06-03 14:01:17:599759900] [DEBUG] PowerShell stderr: 
+[2026-06-03 14:01:17:599771200] [DEBUG] AI chat request successful
+[2026-06-03 14:02:24:904127500] [INFO] === Online Code IDE Server ===
+[2026-06-03 14:02:24:904237700] [INFO] Configuration loaded successfully
+[2026-06-03 14:02:24:995582100] [INFO] Starting server...
+[2026-06-03 14:02:25:002011400] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 14:02:25:002046000] [INFO] Max workers: 10
+[2026-06-03 14:02:25:002054700] [INFO] Request timeout: 30 seconds
+[2026-06-03 14:02:40:201401600] [INFO] AI chat request received
+[2026-06-03 14:02:40:201467200] [DEBUG] AI chat request body: {"model":"glm-4","messages":[{"role":"user","content":"???????????}],"temperature":0.7}
+[2026-06-03 14:02:40:201489000] [DEBUG] PowerShell command length: 501
+[2026-06-03 14:02:40:710779000] [DEBUG] PowerShell stdout: 
+[2026-06-03 14:02:40:710823000] [DEBUG] PowerShell stderr: -Command : �޷�����-Command����ʶ��Ϊ cmdlet���������ű��ļ�������г�������ơ��������Ƶ�ƴд���������·������ȷ��·
+����ȷ��Ȼ������һ�Ρ�
+����λ�� ��:1 �ַ�: 1
++ -Command $headers = @{'Content-Type'='application/json';'Authorizatio ...
++ ~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (-Command:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+Invoke-RestMethod : {"error":{"code":"1001","message":"Header��δ�յ�Authorization�������޷�����������֤��"}}
+����λ�� ��:1 �ַ�: 344
++ ... );$response=Invoke-RestMethod -Uri 'https://open.bigmodel.cn/api/paas ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (System.Net.HttpWebRequest:HttpWebRequest) [Invoke-RestMethod]��WebExcep
+    tion
+    + FullyQualifiedErrorId : WebCmdletWebResponseException,Microsoft.PowerShell.Commands.InvokeRestMethodCommand
+
+[2026-06-03 14:02:40:710834200] [WARN] AI API response is empty
+[2026-06-03 14:03:22:895028000] [INFO] === Online Code IDE Server ===
+[2026-06-03 14:03:22:895151900] [INFO] Configuration loaded successfully
+[2026-06-03 14:03:23:002522200] [INFO] Starting server...
+[2026-06-03 14:03:23:008673400] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-03 14:03:23:008709800] [INFO] Max workers: 10
+[2026-06-03 14:03:23:008717900] [INFO] Request timeout: 30 seconds
+[2026-06-03 14:03:42:055931400] [INFO] AI chat request received
+[2026-06-03 14:03:42:056022900] [DEBUG] AI chat request body: {"model":"glm-4","messages":[{"role":"user","content":"write a simple hello world code"}],"temperature":0.7}
+[2026-06-03 14:03:42:056087100] [DEBUG] PowerShell command length: 520
+[2026-06-03 14:04:10:308693500] [DEBUG] PowerShell stdout: {
+    "choices":  [
+                    {
+                        "finish_reason":  "stop",
+                        "index":  0,
+                        "message":  {
+                                        "content":  "Of course! The \"Hello, World!\" program is the traditional first program you write when learning a new language. It simply prints the text \"Hello, World!\" to the console.\n\nHere are examples in some of the most popular programming languages.\n\n### Python (Recommended for beginners)\n\nPython is known for its simple, readable syntax.\n\n```python\n# This line prints the text \"Hello, World!\" to the screen\nprint(\"Hello, World!\")\n```\n\n**How to run it:**\n1.  Save the code in a file named `hello.py`.\n2.  Open a terminal or command prompt.\n3.  Run the file with the command: `python hello.py`\n\n---\n\n### JavaScript\n\nJavaScript is the language of the web. You can run it in two ways:\n\n#### 1. In a web browser (HTML file)\nThis is the most common way. You create an HTML file and add the script inside.\n\n```html\n\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n\u003chead\u003e\n    \u003ctitle\u003eMy First Program\u003c/title\u003e\n\u003c/head\u003e\n\u003cbody\u003e\n    \u003ch1\u003eCheck the console!\u003c/h1\u003e\n    \u003cscript\u003e\n        // This line prints the text to the browser\u0027s developer console\n        console.log(\"Hello, World!\");\n    \u003c/script\u003e\n\u003c/body\u003e\n\u003c/html\u003e\n```\n**How to run it:**\n1.  Save the code as `index.html`.\n2.  Open the file in any web browser (like Chrome or Firefox).\n3.  Right-click the page and select \"Inspect\" to open the developer tools, then click on the \"Console\" tab to see the output.\n\n#### 2. Using Node.js (on your computer)\nIf you have Node.js installed, you can run it directly from your terminal.\n\n```javascript\n// This line prints the text to the terminal\nconsole.log(\"Hello, World!\");\n```\n**How to run it:**\n1.  Save the code in a file named `hello.js`.\n2.  Open a terminal or command prompt.\n3.  Run the file with the command: `node hello.js`\n\n---\n\n### Java\n\nJava is a strongly-typed, object-oriented language often used in large-scale applications.\n\n```java\n// This is the main class that contains the program\npublic class HelloWorld {\n\n    // This is the main method, the entry point of the program\n    public static void main(String[] args) {\n        // This line prints the text to the console\n        System.out.println(\"Hello, World!\");\n    }\n}\n```\n**How to run it:**\n1.  Save the code in a file named `HelloWorld.java`.\n2.  Open a terminal or command prompt.\n3.  Compile the code with: `javac HelloWorld.java`\n4.  Run the compiled code with: `java HelloWorld`\n\n---\n\n### C++\n\nC++ is a powerful, compiled language used for system software and game development.\n\n```cpp\n#include \u003ciostream\u003e // This line includes the library for input/output operations\n\n// The main function is the entry point of the program\nint main() {\n    // This line prints the text to the console\n    std::cout \u003c\u003c \"Hello, World!\" \u003c\u003c std::endl;\n    return 0; // Indicates the program finished successfully\n}\n```\n**How to run it:**\n1.  Save the code in a file named `hello.cpp`.\n2.  You need a C++ compiler (like g++).\n3.  Open a terminal or command prompt.\n4.  Compile the code with: `g++ hello.cpp -o hello`\n5.  Run the compiled program with: `./hello`\n\n---\n\n### C#\n\nC# is a modern, object-oriented language from Microsoft, often used with the .NET framework.\n\n```csharp\n// This line includes the library for console input/output\nusing System;\n\n// The main class that contains the program\npublic class Program\n{\n    // The Main method is the entry point of the program\n    public static void Main()\n    {\n        // This line prints the text to the console\n        Console.WriteLine(\"Hello, World!\");\n    }\n}\n```\n**How to run it:**\n1.  You need the .NET SDK installed.\n2.  Save the code in a file named `Program.cs`.\n3.  Open a terminal or command prompt.\n4.  Run the code with: `dotnet run` (make sure you are in the same directory as the file).\n\n---\n\n### Summary Table\n\n| Language    | Code                                      | How to Run                                  |\n|-------------|-------------------------------------------|---------------------------------------------|\n| **Python**  | `print(\"Hello, World!\")`                  | `python hello.py`                           |\n| **JS (Node)**| `console.log(\"Hello, World!\");`            | `node hello.js`                             |\n| **Java**    | `System.out.println(\"Hello, World!\");`     | `javac HelloWorld.java` then `java HelloWorld` |\n| **C++**     | `std::cout \u003c\u003c \"Hello, World!\" \u003c\u003c std::endl;` | `g++ hello.cpp -o hello` then `./hello` |\n| **C#**      | `Console.WriteLine(\"Hello, World!\");`      | `dotnet run`                                |",
+                                        "role":  "assistant"
+                                    }
+                    }
+                ],
+    "created":  1780495450,
+    "id":  "20260603220342fc2e5d3ef0784761",
+    "model":  "glm-4",
+    "object":  "chat.completion",
+    "request_id":  "20260603220342fc2e5d3ef0784761",
+    "usage":  {
+                  "completion_tokens":  1081,
+                  "prompt_tokens":  15,
+                  "total_tokens":  1096
+              }
+}
+
+[2026-06-03 14:04:10:308777800] [DEBUG] PowerShell stderr: 
+[2026-06-03 14:04:10:308787800] [DEBUG] AI chat request successful
+[2026-06-03 14:07:51:970603200] [DEBUG] Analyze request received - Body length: 332
+[2026-06-03 14:07:51:970738700] [DEBUG] Starting analysis for language: python
+[2026-06-03 14:07:52:364131400] [DEBUG] Analysis complete - Found 0 issues
+[2026-06-03 14:07:54:775716800] [DEBUG] Analyze request received - Body length: 332
+[2026-06-03 14:07:54:775786200] [DEBUG] Starting analysis for language: python
+[2026-06-03 14:07:55:059897800] [DEBUG] Analysis complete - Found 0 issues

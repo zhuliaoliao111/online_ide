@@ -1,0 +1,22 @@
+# Server Configuration
+server.host = 127.0.0.1
+server.port = 3000
+server.max_workers = 10
+server.timeout_secs = 30
+server.max_request_size = 1048576
+
+# Compiler Configuration
+compiler.python_path = python
+compiler.java_path = javac
+compiler.gcc_path = gcc
+compiler.gpp_path = g++
+compiler.rustc_path = rustc
+compiler.max_compile_time_secs = 60
+compiler.max_run_time_secs = 30
+compiler.temp_dir = 
+
+# Logging Configuration
+logging.level = info
+logging.file_path = logs/server.log
+logging.max_file_size_mb = 10
+logging.max_backups = 5
