@@ -573,25 +573,29 @@ fn handle_stats(stats: &Arc<Mutex<HashMap<Language, ExecutionStats>>>) -> String
 
 /// URL 解码函数（处理 %XX 编码和 + 空格）
 fn url_decode(s: &str) -> String {
-    let mut result = String::new();
-    let mut chars = s.chars().peekable();
+    let mut bytes: Vec<u8> = Vec::new();
+    let mut i = 0;
+    let s_bytes = s.as_bytes();
 
-    while let Some(c) = chars.next() {
-        if c == '%' {
-            // 处理 %XX 编码
-            let hex: String = chars.by_ref().take(2).collect();
-            if let Ok(byte) = u8::from_str_radix(&hex, 16) {
-                result.push(byte as char);
+    while i < s_bytes.len() {
+        if s_bytes[i] == b'%' && i + 2 < s_bytes.len() {
+            if let Ok(hex_str) = std::str::from_utf8(&s_bytes[i+1..i+3]) {
+                if let Ok(byte) = u8::from_str_radix(hex_str, 16) {
+                    bytes.push(byte);
+                    i += 3;
+                    continue;
+                }
             }
-        } else if c == '+' {
-            // 处理 + 表示空格
-            result.push(' ');
-        } else {
-            result.push(c);
+        } else if s_bytes[i] == b'+' {
+            bytes.push(b' ');
+            i += 1;
+            continue;
         }
+        bytes.push(s_bytes[i]);
+        i += 1;
     }
 
-    result
+    String::from_utf8_lossy(&bytes).into_owned()
 }
 
 /// 格式化编译响应（带执行时间）

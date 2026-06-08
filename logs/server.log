@@ -945,3 +945,28 @@ C:\Users\zhu\AppData\Local\Temp\.tmpoTLDIo\main.cpp:19:11: error: expected ';' b
 [2026-06-06 09:02:01:073649600] [INFO] Server started on http://127.0.0.1:3000
 [2026-06-06 09:02:01:073862900] [INFO] Max workers: 10
 [2026-06-06 09:02:01:074010300] [INFO] Request timeout: 30 seconds
+[2026-06-06 09:21:57:466552200] [INFO] === Online Code IDE Server ===
+[2026-06-06 09:21:57:466637700] [INFO] Configuration loaded successfully
+[2026-06-06 09:21:57:466767400] [INFO] Starting server...
+[2026-06-06 09:21:57:467689900] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-06 09:21:57:467865400] [INFO] Max workers: 10
+[2026-06-06 09:21:57:468124100] [INFO] Request timeout: 30 seconds
+[2026-06-06 11:27:51:583305800] [INFO] === Online Code IDE Server ===
+[2026-06-06 11:27:51:584408500] [INFO] Configuration loaded successfully
+[2026-06-06 11:27:51:584732700] [INFO] Starting server...
+[2026-06-06 11:27:51:586338400] [INFO] Server started on http://127.0.0.1:3000
+[2026-06-06 11:27:51:586467100] [INFO] Max workers: 10
+[2026-06-06 11:27:51:586586600] [INFO] Request timeout: 30 seconds
+[2026-06-06 11:28:43:611310600] [INFO] Request: language=rust, status=SUCCESS, duration=256ms
+[2026-06-06 11:29:04:367257900] [INFO] Request: language=cpp, status=SUCCESS, duration=1057ms
+[2026-06-06 11:29:17:999296700] [ERROR] Execution failed - Errors: Compilation or runtime error:
+C:\Users\zhu\AppData\Local\Temp\.tmpmGeMNH\main.cpp: In function 'int main()':
+C:\Users\zhu\AppData\Local\Temp\.tmpmGeMNH\main.cpp:19:12: error: expected ';' before 'return'
+   19 |     cout<<x
+      |            ^
+      |            ;
+   20 |     return 0;
+      |     ~~~~~~  
+
+[2026-06-06 11:29:17:999999800] [INFO] Request: language=cpp, status=FAILED, duration=166ms
+[2026-06-06 11:33:52:685948000] [INFO] Request: language=cpp, status=SUCCESS, duration=1089ms
