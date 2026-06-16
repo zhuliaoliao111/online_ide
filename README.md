@@ -11,31 +11,34 @@
   - C++
   - Rust
 - 代码静态分析功能，支持各语言的原生分析工具：
-  - Python: pylint、pyflakes
-  - Java: javac with -Xlint
-  - C/C++: gcc/g++ with -Wall、cppcheck
-  - Rust: rustc、clippy
+  - Python: pylint（不可用时回退到 `python -m py_compile` 进行语法检查）
+  - Java: javac（带 `-Xlint:all -Xlint:-options`）
+  - C: gcc（带 `-fsyntax-only -Wall -Wextra -pedantic -std=c11`），可用时附加 cppcheck
+  - C++: g++（带 `-fsyntax-only -Wall -Wextra -pedantic -std=c++17`），可用时附加 cppcheck
+  - Rust: rustc（`--emit=metadata --edition=2021`），可用时附加 cargo clippy
 - 多线程并发请求处理
 - 支持标准输入的代码执行
 - 代码执行统计和监控
-- 配置文件支持（TOML 格式）
+- 配置文件支持（自实现的 `key = value` 格式解析器，文件以 `.toml` 命名但非标准 TOML 解析）
 - 结构化日志记录（支持多级别日志）
 - 内置 Web 前端界面（集成 Monaco Editor）
-- AI 代码助手集成
+- AI 代码助手集成（前端直连第三方大模型 API）
 - 实时代码分析和诊断
+- 跨域支持（CORS：API 响应设置 `Access-Control-Allow-Origin: *`）
 
 ## 技术栈
 
 - Rust 2021 Edition
-- 标准 TCP/HTTP 服务器实现
-- 多线程并发处理
-- 临时文件系统操作
-- 时间处理和格式化
+- 标准 TCP/HTTP 服务器实现（不依赖第三方 Web 框架）
+- 多线程并发处理（基于 `std::thread`）
+- 临时文件系统操作（`tempfile` 库）
+- 时间处理和格式化（`time` 库）
+- 序列化与 JSON 处理（`serde` + `serde_json`）
 
 ## 项目结构
 
 ```
-code_ide_backend/
+online_ide/
 ├── Cargo.toml              # 项目配置和依赖
 ├── Cargo.lock              # 依赖锁定文件
 ├── README.md               # 项目说明文档
@@ -163,9 +166,18 @@ language=python&code=print('Hello')&input=test
     }
   ],
   "execution_time_ms": 45,
-  "analyzer_version": "static-analysis/pylint"
+  "analyzer_version": "static-analysis/pylint/pyflakes"
 }
 ```
+
+> 上述 `analyzer_version` 字段是 `CodeAnalyzer::get_analyzer_version` 返回的固定字符串前缀，各语言对应的实际取值如下：
+> - Python → `static-analysis/pylint/pyflakes`
+> - Java → `static-analysis/javac`
+> - C → `static-analysis/gcc`
+> - C++ → `static-analysis/g++`
+> - Rust → `static-analysis/rustc/clippy`
+>
+> 注：Python 当前实际只调用 `pylint`（必要时回退到 `python -m py_compile`），并未真正调用 `pyflakes`，该字符串为对外展示的版本标签。
 
 ### 获取统计信息
 
@@ -199,7 +211,7 @@ language=python&code=print('Hello')&input=test
 
 ## 配置文件
 
-创建 `config.toml` 文件可以自定义服务器配置：
+创建 `config.toml` 文件可以自定义服务器配置。**注：项目使用自定义的 `key = value` 解析器（见 `config.rs::parse_config_file`），不是标准 TOML 库**，因此不支持 TOML 的表头/嵌套数组/多行字符串等高级特性，仅支持点号分隔的扁平常量配置。
 
 ```toml
 # Server Configuration
@@ -233,23 +245,23 @@ logging.max_backups = 5
 - `server.port`: 监听端口（默认：3000）
 - `server.max_workers`: 最大工作线程数（默认：10）
 - `server.timeout_secs`: 请求超时时间（默认：30秒）
-- `server.max_request_size`: 最大请求大小（字节，默认：1MB）
+- `server.max_request_size`: 最大请求大小（字节，默认：1MB）。**注意：当前实现仅解析该字段，未在 HTTP 请求处理中实际校验。**
 
 #### 编译器配置
-- `compiler.python_path`: Python 解释器路径
-- `compiler.java_path`: Java 编译器路径
-- `compiler.gcc_path`: GCC 编译器路径
-- `compiler.gpp_path`: G++ 编译器路径
-- `compiler.rustc_path`: Rust 编译器路径
-- `compiler.max_compile_time_secs`: 最大编译时间（默认：60秒）
-- `compiler.max_run_time_secs`: 最大运行时间（默认：30秒）
-- `compiler.temp_dir`: 临时文件目录（空字符串表示使用系统默认）
+- `compiler.python_path`: Python 解释器路径（默认：`python`）
+- `compiler.java_path`: Java 编译器路径（默认：`javac`）
+- `compiler.gcc_path`: GCC 编译器路径（默认：`gcc`）
+- `compiler.gpp_path`: G++ 编译器路径（默认：`g++`）
+- `compiler.rustc_path`: Rust 编译器路径（默认：`rustc`）
+- `compiler.max_compile_time_secs`: 最大编译时间（默认：60秒）。**注意：当前实现未对编译过程强制超时。**
+- `compiler.max_run_time_secs`: 最大运行时间（默认：30秒）。**注意：当前实现未对运行过程强制超时。**
+- `compiler.temp_dir`: 临时文件目录（空字符串表示使用系统默认）。**注意：当前实现始终通过 `tempfile::tempdir()` 使用系统默认临时目录。**
 
 #### 日志配置
 - `logging.level`: 日志级别（trace/debug/info/warn/error，默认：info）
-- `logging.file_path`: 日志文件路径（默认：无，仅输出到控制台）
-- `logging.max_file_size_mb`: 单个日志文件最大大小（默认：10MB）
-- `logging.max_backups`: 日志文件备份数量（默认：5）
+- `logging.file_path`: 日志文件路径（默认：无，仅输出到控制台；当 `config.toml` 中显式配置 `logging.file_path = logs/server.log` 时会输出到文件）
+- `logging.max_file_size_mb`: 单个日志文件最大大小（默认：10MB）。**注意：当前实现未启用按大小轮转。**
+- `logging.max_backups`: 日志文件备份数量（默认：5）。**注意：当前实现未启用日志备份。**
 
 ## 使用示例
 
@@ -297,10 +309,10 @@ curl http://localhost:3000/health
 #### 功能特性
 - **Monaco Editor 集成**：提供专业的代码编辑体验，支持语法高亮、自动补全、代码折叠等
 - **多语言支持**：一键切换 Python、Java、C、C++、Rust 五种编程语言
-- **实时代码分析**：编辑代码时自动进行静态分析，显示代码问题
+- **实时代码分析**：编辑代码时（带防抖）自动调用 `/api/analyze` 进行静态分析，结果以 Monaco 诊断标记显示
 - **标准输入支持**：可以为需要输入的程序提供测试数据
 - **输出显示**：实时显示程序输出和错误信息
-- **AI 代码助手**：内置 AI 助手，可以提供代码建议和帮助
+- **AI 代码助手**：内置对话式 AI 助手面板，**前端通过 HTTPS 直接调用第三方大模型 API（默认指向 `https://open.bigmodel.cn/api/paas/v4/chat/completions`，即智谱 AI 的 GLM 系列接口）**，使用前需要在 `frontend/index.html` 中配置对应的 API Key
 - **状态栏**：显示当前语言和执行状态
 
 #### 使用步骤
@@ -322,46 +334,53 @@ curl http://localhost:3000/health
 
 ### server.rs
 HTTP 服务器模块，提供：
-- 基于 TCP 的 HTTP 服务器实现
-- 多线程并发请求处理
-- API 端点路由（编译、分析、统计、健康检查）
-- 请求解析和响应格式化
-- 执行统计和监控
+- 基于 TCP 的简易 HTTP 服务器实现（不依赖第三方 Web 框架）
+- 多线程并发请求处理（每连接一个 `std::thread`）
+- API 端点路由：`/api/compile`、`/api/analyze`、`/stats`、`/health`、`/`
+- 支持 JSON 与 `application/x-www-form-urlencoded` 两种请求体格式
+- 请求解析和响应格式化（JSON + CORS 头）
+- 执行统计和监控（按语言分类的成功/失败次数、平均耗时）
 
 ### compiler.rs
 编译器模块，负责：
-- 多语言代码编译和执行
-- 临时文件管理
-- 标准输入/输出处理
-- 编译和运行错误处理
+- 多语言代码编译和执行（Python 直解释执行；Java/C/C++/Rust 先编译后执行）
+- 临时文件管理（通过 `tempfile` 库创建临时目录，并在结束时自动清理）
+- 标准输入/输出处理（Python 通过子进程 stdin 写入；其他语言通过临时可执行文件运行）
+- 编译和运行错误处理，统一为 `CodeResponse` 返回
 
 ### analyzer.rs
 代码分析模块，提供：
-- 多语言静态代码分析
-- 集成各语言原生分析工具
-- 代码问题检测和报告
-- 分析结果格式化
+- 多语言静态代码分析（Python/Java/C/C++/Rust）
+- 各语言使用原生工具：
+  - Python: `pylint --output-format=text --exit-zero`，不可用时回退到 `python -m py_compile` 语法检查
+  - Java: `javac -Xlint:all -Xlint:-options`
+  - C: `gcc -fsyntax-only -Wall -Wextra -pedantic -std=c11`，可用时附加 `cppcheck --quiet --enable=all`
+  - C++: `g++ -fsyntax-only -Wall -Wextra -pedantic -std=c++17`，可用时附加 `cppcheck --quiet --enable=all`
+  - Rust: `rustc --emit=metadata --edition=2021`，可用时附加 `cargo clippy --message-format=json`
+- 输出标准化为 `AnalysisIssue`（severity/message/line/column/rule），再聚合成 `AnalysisResponse`
 
 ### models.rs
 数据模型模块，定义：
-- 支持的编程语言枚举
-- 请求/响应数据结构
-- 执行统计结构
-- 分析问题结构
+- 支持的编程语言枚举 `Language`（含 `as_str`、`get_compiler`、`get_source_extension`、`get_display_name` 等方法）
+- 请求结构体 `CodeRequest`
+- 响应结构体 `CodeResponse`、`AnalysisResponse`、`AnalysisIssue`
+- 编译结果 `CompileResult`
+- 执行统计 `ExecutionStats`（含 `record_success/record_failure/get_average_time_ms` 等）
 
 ### config.rs
 配置管理模块，负责：
-- 配置文件加载和解析
+- 配置文件加载和解析（自定义简化版 `key = value` 解析器，**不支持 TOML 嵌套数组与多文档**）
 - 配置验证
 - 默认配置管理
-- 配置错误处理
+- 配置错误处理（`ConfigError` 枚举：FileNotFound/ParseError/InvalidValue/IoError）
 
 ### logging.rs
 日志系统模块，提供：
 - 多级别日志记录（Trace/Debug/Info/Warn/Error）
-- 线程安全的日志输出
+- 线程安全的日志输出（基于 `Arc<Mutex<...>>`）
 - 控制台和文件双输出
-- 日志格式化和时间戳
+- 日志格式化和时间戳（使用 `time` 库）
+- **注意：当前实现未启用基于 `max_file_size_mb` / `max_backups` 的日志轮转，相关配置字段仅被读取存储**
 
 ### errors.rs
 错误处理模块，定义：
